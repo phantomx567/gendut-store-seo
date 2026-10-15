@@ -1,5 +1,13 @@
 # Gendut Store: sumber GitHub, penerbitan otomatis
 
+## Aktivasi hosting sekali
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fphantomx567%2Fgendut-store-seo)
+
+Masuk ke Render dengan akunmu, pilih workspace **Hobby** gratis, lalu tinjau satu **Static Site** yang sudah didefinisikan di repository ini. Tidak perlu mengunggah file website. Jangan memilih layanan server atau upgrade berbayar. Setelah koneksi awal selesai, pembaruan pada branch `main` memicu build dan penerbitan otomatis.
+
+[Hasil pemeriksaan website](https://github.com/phantomx567/gendut-store-seo/actions/workflows/checks.yml)
+
 Folder publik `dist/` berisi website statis dan aset logo asli. `scripts/build-static.py` menyiapkan metadata, canonical, Open Graph, robots, dan sitemap dari URL hosting yang sebenarnya. Website tidak membutuhkan API model, database, atau backend kantor.
 
 `render.yaml` membuat satu **Static Site**, bukan layanan server berbayar. Render membangun website setiap perubahan masuk ke branch publikasi yang dipilih. URL `onrender.com` berasal dari hasil layanan, bukan diklaim sudah tersedia. Repository sumber adalah https://github.com/phantomx567/gendut-store-seo. Hosting belum terhubung dan website belum dinyatakan tayang. Paket ini tidak membeli atau meningkatkan layanan dan tidak menyimpan kredensial.
