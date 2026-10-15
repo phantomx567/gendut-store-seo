@@ -1,0 +1,7 @@
+# Gendut Store — user direction and applied guidance
+
+Skill: UI/UX Pro Max, nextlevelbuilder/ui-ux-pro-max-skill commit56ea9cf174ed86786187daa9de0e6247cb0747e4. SKILL.md and references/pro-rules.md + quick-reference.md read. Design-system query `gaming ecommerce dark purple` matched Feature-Rich Showcase, gaming 3D showcase and purple dark palette. Targeted UX query `dark mode contrast` returned readability,4.5:1 normal text and visible focus guidance. Actual stack is vanilla HTML/CSS/JS, no React/Tailwind assumed.
+
+Reza's latest explicit preference overrides earlier white/lavender and generic rose CTA: dark purple canvas, purple action, restrained neon accent. Keep original brand and one existing controller mascot, game icon imagery, short writer-approved hero, grid immediately after hero,7 useful guides. No new WebGL/runtime, animation libraries or invented social proof. Preserve static free pipeline and compressed images. Native-app pro-rules do not redefine web WCAG;44px controls are a usability target, not a claim of mandatory44pt on web.
+
+Implementation: semantic tokens in assets/theme-dark.css, subdued surfaces and limited radial glow, readable secondary text, SVG action icons, keyboard focus in mint, reduced-motion retained, reserved image sizes, visible search label. System fonts retained for offline robustness; typography pair recommendation is optional. Final dark contrast/geometry and real390×844 firstfold must be independently checked; generated MASTER recommendations are guidance, not automatic QA.

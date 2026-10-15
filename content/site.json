@@ -1,0 +1,1251 @@
+{
+  "origin": "https://gendut-store-panduan.onrender.com",
+  "pages": [
+    {
+      "path": "/",
+      "title": "Top Up Game & Voucher | Gendut Store",
+      "description": "Temukan pilihan top up game dan voucher di Gendut Store. Cek ID, server, region atau edisi, lalu buka detail produk dan lanjutkan pembelian di situs utama.",
+      "h1": "Top up game. Lanjut mabar.",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up Game & Voucher | Gendut Store",
+        "description": "Temukan pilihan top up game dan voucher di Gendut Store. Cek ID, server, region atau edisi, lalu buka detail produk dan lanjutkan pembelian di situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "CollectionPage",
+            "@id": "https://gendut-store-panduan.onrender.com/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Top Up Game & Voucher | Gendut Store",
+            "description": "Temukan pilihan top up game dan voucher di Gendut Store. Cek ID, server, region atau edisi, lalu buka detail produk dan lanjutkan pembelian di situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "mainEntity": {
+              "@id": "https://gendut-store-panduan.onrender.com/#pilihan-game"
+            }
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://gendut-store-panduan.onrender.com/#pilihan-game",
+            "name": "Pilihan game dan voucher Gendut Store",
+            "numberOfItems": 7,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Mobile Legends ID 🇮🇩",
+                "url": "https://gendut-store-panduan.onrender.com/game/mobile-legends/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Free Fire ID 🇮🇩",
+                "url": "https://gendut-store-panduan.onrender.com/game/free-fire/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "PUBG Mobile ID 🇮🇩",
+                "url": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "VALORANT",
+                "url": "https://gendut-store-panduan.onrender.com/game/valorant/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Genshin Impact",
+                "url": "https://gendut-store-panduan.onrender.com/game/genshin-impact/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Honor of Kings",
+                "url": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "name": "Voucher Minecraft",
+                "url": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "Gendut Store",
+        "top up game",
+        "voucher game"
+      ],
+      "cards": [
+        {
+          "name": "Mobile Legends ID 🇮🇩",
+          "description": "Pilihan untuk akun Indonesia. Siapkan User ID dan Server ID yang sesuai.",
+          "label": "Panduan MLBB",
+          "path": "/game/mobile-legends/",
+          "image": {
+            "path": "/assets/mlbb-game.webp",
+            "source_sha256": "0694d0b277a2c4b44c21b4a80e1dd791045af69f2b9dac446c3fc8ba2581fe56",
+            "sha256": "bc105fa21ca8bc59a5e8dec2dc9702f83c22ec0140885bd7b6a92beda6bf32d6",
+            "width": 358,
+            "height": 358,
+            "bytes": 24014
+          },
+          "category": "topup"
+        },
+        {
+          "name": "Free Fire ID 🇮🇩",
+          "description": "Cek pilihan Free Fire Indonesia dan cocokkan ID pemainmu.",
+          "label": "Panduan Free Fire",
+          "path": "/game/free-fire/",
+          "image": {
+            "path": "/assets/free-fire-game.webp",
+            "source_sha256": "e371953a8839700ae5710f9c6fbb83ef3501d7cf0026eabdab3c2da9f1789eec",
+            "sha256": "7b59c13a47a3268e3a0ce011843e126d804f905cd79c59ef03319ada6a91b491",
+            "width": 480,
+            "height": 480,
+            "bytes": 47030
+          },
+          "category": "topup"
+        },
+        {
+          "name": "PUBG Mobile ID 🇮🇩",
+          "description": "Pilihan PUBG Mobile Indonesia. Periksa User ID sebelum melanjutkan.",
+          "label": "Panduan PUBG Mobile",
+          "path": "/game/pubg-mobile/",
+          "image": {
+            "path": "/assets/pubg-mobile-game.webp",
+            "source_sha256": "4e9783b00634be188441dcec3d3c0773e95b9cf4d9cca673edcfea135c425b2c",
+            "sha256": "1bb644da421de62fa5500d18bd337a4e8dbe4fdfe11f706b9dcaa33e40061b9f",
+            "width": 358,
+            "height": 358,
+            "bytes": 19744
+          },
+          "category": "topup"
+        },
+        {
+          "name": "VALORANT",
+          "description": "Buka pilihan VALORANT dan isi RIOT#TAG sesuai petunjuk produk.",
+          "label": "Panduan VALORANT",
+          "path": "/game/valorant/",
+          "image": {
+            "path": "/assets/valorant-id-game.webp",
+            "source_sha256": "01038144c81a63aef1385a0cef8e4be19c8d3a5dc761ada29e906bf7040a2f48",
+            "sha256": "60b664d93513072b57866b7a6e73d22bdc29e67efb43a41328f6c4ed12485f20",
+            "width": 358,
+            "height": 358,
+            "bytes": 35160
+          },
+          "category": "topup"
+        },
+        {
+          "name": "Genshin Impact",
+          "description": "Cocokkan User ID dan server dengan akun Genshin Impact yang kamu gunakan.",
+          "label": "Panduan Genshin Impact",
+          "path": "/game/genshin-impact/",
+          "image": {
+            "path": "/assets/genshin-impact-game.webp",
+            "source_sha256": "1f3c292f39a6c730e3acba4be9170fb516753c18539dfbf56d576a0290cf0cde",
+            "sha256": "0cdc58866878a2040814a3b4a9f9db1fe1132d71dbb94aff98aaeeb5a2d4b6d8",
+            "width": 358,
+            "height": 358,
+            "bytes": 40384
+          },
+          "category": "topup"
+        },
+        {
+          "name": "Honor of Kings",
+          "description": "Telusuri pilihan produk Honor of Kings dan periksa data akun yang diminta.",
+          "label": "Panduan Honor of Kings",
+          "path": "/game/honor-of-kings/",
+          "image": {
+            "path": "/assets/honor-of-kings-game.webp",
+            "source_sha256": "3ca7f0e282e52fe2acd4e337ef2d5ae274ba0b9768c7e358ede3a6c8d5d1788e",
+            "sha256": "908724ecad2533563a305066911b6479d6e246e039422d3e70bd89ca23d7b8db",
+            "width": 358,
+            "height": 358,
+            "bytes": 29372
+          },
+          "category": "topup"
+        },
+        {
+          "name": "Voucher Minecraft",
+          "description": "Baca jenis produk, edisi dan ketentuan penggunaannya sebelum memilih voucher.",
+          "label": "Panduan Voucher Minecraft",
+          "path": "/game/voucher-minecraft/",
+          "image": {
+            "path": "/assets/voucher-minecraft-game.webp",
+            "source_sha256": "86ce2ce203e86e07c494ced5d5750ea4ba5861138e21d6ca5388fc8fa393c273",
+            "sha256": "4ca03dabab4a73db306ef2b0f5be9de0a6cf32ce4f8a0b8c64917af932597c26",
+            "width": 480,
+            "height": 480,
+            "bytes": 41328
+          },
+          "category": "voucher"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Apakah saya membeli langsung di halaman ini?",
+          "answer": "Kartu game membuka panduan singkat untuk mengecek akun dan jenis produk. Dari panduan itu, lanjutkan ke situs utama Gendut Store untuk memilih produk dan membeli. Tombol katalog juga menuju gendutstore.com."
+        },
+        {
+          "question": "Data apa yang perlu saya siapkan?",
+          "answer": "Kebutuhannya mengikuti produk. Contohnya, Mobile Legends meminta User ID dan Server ID, sedangkan VALORANT memakai RIOT#TAG. Gunakan informasi dari akun game dan ikuti nama kolom yang tertera."
+        },
+        {
+          "question": "Apa bedanya top up dan voucher?",
+          "answer": "Alurnya bergantung pada produk. Sebagian pengisian menggunakan data akun; voucher dapat memiliki langkah penukaran tersendiri. Baca apa yang kamu terima dan cara menggunakannya sebelum membeli."
+        },
+        {
+          "question": "Apakah satu produk berlaku untuk semua region atau platform?",
+          "answer": "Kecocokan mengikuti keterangan produk. Pilihan berlabel Indonesia, edisi tertentu atau platform tertentu perlu dicocokkan dengan akunmu. Nama game yang sama belum tentu berarti produknya dapat dipakai lintas versi."
+        },
+        {
+          "question": "Di mana melihat pilihan dan metode pembayaran terbaru?",
+          "answer": "Buka halaman produk di situs utama Gendut Store. Ikuti pilihan serta instruksi yang ditampilkan saat memesan, lalu periksa kembali ringkasan pesanan sebelum menyelesaikan pembayaran."
+        }
+      ],
+      "hero": {
+        "h1": "Top up game. Lanjut mabar.",
+        "lede": "Temukan pilihan game dan voucher di sini, lalu cek detail dan lanjutkan pembelian di situs utama Gendut Store.",
+        "primary_cta": {
+          "label": "Buka katalog",
+          "href": "https://gendutstore.com/games"
+        },
+        "secondary_cta": {
+          "label": "Pilihan game",
+          "href": "#pilihan-game"
+        }
+      }
+    },
+    {
+      "path": "/game/mobile-legends/",
+      "title": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
+      "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
+      "h1": "Top up Mobile Legends ID: cek User ID dan Server ID",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
+        "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
+        "url": "https://gendut-store-panduan.onrender.com/game/mobile-legends/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/mobile-legends/",
+            "name": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
+            "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Mobile Legends ID 🇮🇩",
+                "item": "https://gendut-store-panduan.onrender.com/game/mobile-legends/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "Mobile Legends ID 🇮🇩",
+        "top up Mobile Legends ID 🇮🇩"
+      ],
+      "copy": {
+        "slug": "mobile-legends",
+        "path": "/game/mobile-legends/",
+        "catalog_slug": "MLBB",
+        "game": "Mobile Legends ID 🇮🇩",
+        "h1": "Top up Mobile Legends ID: cek User ID dan Server ID",
+        "intro": "Mau memilih Diamonds untuk Mobile Legends? Mulai dengan memeriksa dua data akun: User ID dan Server ID. Pilihan yang dituju halaman ini berlabel Indonesia, jadi cocokkan juga dengan akun yang kamu gunakan.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "Diamonds dan Weekly Diamond Pass tercantum pada halaman pusat."
+          },
+          {
+            "label": "Data akun",
+            "value": "User ID dan Server ID."
+          },
+          {
+            "label": "Label wilayah",
+            "value": "Mobile Legends ID Indonesia."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Dua kolom, dua data yang perlu dicocokkan",
+            "paragraphs": [
+              "Ambil User ID dan Server ID dari informasi akun Mobile Legends, lalu bandingkan dengan nama kolom pada formulir. Masukkan masing-masing ke kolom yang sesuai; nickname saja tidak menggantikan dua data yang diminta.",
+              "Periksa susunan angka sebelum memilih produk. Jika kamu menyimpan beberapa akun, buka kembali informasi akun tujuan agar data yang disalin tidak tertukar."
+            ]
+          },
+          {
+            "heading": "Baca nama pilihan, bukan hanya jumlahnya",
+            "paragraphs": [
+              "Halaman pusat memuat pilihan Diamonds serta Weekly Diamond Pass. Baca rincian pilihan yang kamu inginkan sebelum memesan. Nama produk yang berbeda dapat memiliki ketentuan berbeda, jadi tentukan berdasarkan kebutuhan akunmu."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Buka pilihan MLBB Indonesia",
+            "text": "Lanjut ke halaman produk pusat melalui tautan di bawah."
+          },
+          {
+            "title": "Cocokkan pasangan ID",
+            "text": "Isi User ID dan Server ID sesuai akun tujuan."
+          },
+          {
+            "title": "Periksa produk dan pesanan",
+            "text": "Baca detail pilihan, cek isian, lalu ikuti alur pemesanan dan pembayaran di situs pusat."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Apakah cukup memakai nickname?",
+            "answer": "Formulir produk meminta User ID dan Server ID. Gunakan data sesuai nama kolom tersebut, bukan hanya nama yang tampil saat bermain."
+          },
+          {
+            "question": "Apakah Server ID boleh digabung dengan User ID?",
+            "answer": "Halaman produk menyediakan kolom terpisah. Ikuti pemisahan yang diminta, lalu periksa keduanya sebelum melanjutkan."
+          },
+          {
+            "question": "Apa yang perlu dicek saat memilih Weekly Diamond Pass?",
+            "answer": "Baca nama serta rincian produk di halaman pusat. Pastikan pilihan itu yang kamu maksud; jangan menganggap semua pilihan hanya berbeda jumlah Diamonds."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan Mobile Legends ID",
+          "url": "https://gendutstore.com/id/MLBB"
+        }
+      },
+      "image": {
+        "path": "/assets/mlbb-game.webp",
+        "source_sha256": "0694d0b277a2c4b44c21b4a80e1dd791045af69f2b9dac446c3fc8ba2581fe56",
+        "sha256": "bc105fa21ca8bc59a5e8dec2dc9702f83c22ec0140885bd7b6a92beda6bf32d6",
+        "width": 358,
+        "height": 358,
+        "bytes": 24014
+      }
+    },
+    {
+      "path": "/game/free-fire/",
+      "title": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
+      "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
+      "h1": "Top up Free Fire ID: cek ID pemain",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
+        "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/free-fire/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/free-fire/",
+            "name": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
+            "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Free Fire ID 🇮🇩",
+                "item": "https://gendut-store-panduan.onrender.com/game/free-fire/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "Free Fire ID 🇮🇩",
+        "top up Free Fire ID 🇮🇩"
+      ],
+      "copy": {
+        "slug": "free-fire",
+        "path": "/game/free-fire/",
+        "catalog_slug": "free-fire",
+        "game": "Free Fire ID 🇮🇩",
+        "h1": "Top up Free Fire ID: cek ID pemain",
+        "intro": "Sebelum memilih Diamonds Free Fire, siapkan ID pemain dari akun tujuan. Halaman produk Free Fire Indonesia menggunakan kolom Player ID; periksa angka yang kamu salin agar sesuai dengan akun yang ingin diisi.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "Diamonds Free Fire."
+          },
+          {
+            "label": "Kolom akun",
+            "value": "Player ID."
+          },
+          {
+            "label": "Label wilayah",
+            "value": "Free Fire ID Indonesia."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Kenali label Player ID",
+            "paragraphs": [
+              "Pada formulir, data akun diminta dengan label Player ID. Penjelasan produk juga menggunakan istilah User ID. Cocokkan nomor ID dari informasi akun Free Fire dengan kolom tersebut.",
+              "Jangan mengganti ID dengan nickname. Bila kamu berganti akun saat bermain, pastikan profil yang sedang dibuka adalah akun tujuan pembelian."
+            ]
+          },
+          {
+            "heading": "Pilih Diamonds sesuai kebutuhan",
+            "paragraphs": [
+              "Lihat pilihan Diamonds di halaman pusat dan baca rincian item yang dipilih. Periksa kembali ID pemain sebelum mengikuti langkah berikutnya. Label Indonesia pada produk perlu tetap kamu cocokkan dengan akun, bukan dianggap berlaku untuk semua wilayah."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Siapkan ID pemain",
+            "text": "Buka informasi akun Free Fire yang akan digunakan."
+          },
+          {
+            "title": "Lihat pilihan Diamonds",
+            "text": "Masuk ke halaman Free Fire ID Indonesia dan ikuti kolom Player ID."
+          },
+          {
+            "title": "Tinjau sebelum melanjutkan",
+            "text": "Bandingkan ID dengan akun, cek produk pilihanmu, lalu ikuti petunjuk pemesanan di situs pusat."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Mengapa kolomnya Player ID, tetapi penjelasannya menyebut User ID?",
+            "answer": "Kedua istilah itu muncul pada halaman produk. Formulir memakai label Player ID; gunakan nomor ID akun Free Fire yang diminta pada petunjuknya."
+          },
+          {
+            "question": "Apakah nama karakter bisa menggantikan ID pemain?",
+            "answer": "Gunakan nomor ID sesuai kolom Player ID. Nama karakter saja tidak memenuhi data yang diminta formulir."
+          },
+          {
+            "question": "Apakah pilihan ini untuk semua region?",
+            "answer": "Tujuan produk berlabel Free Fire ID Indonesia. Periksa kecocokan akun dan ketentuan produk sebelum membeli untuk wilayah lain."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan Free Fire ID",
+          "url": "https://gendutstore.com/id/free-fire"
+        }
+      },
+      "image": {
+        "path": "/assets/free-fire-game.webp",
+        "source_sha256": "e371953a8839700ae5710f9c6fbb83ef3501d7cf0026eabdab3c2da9f1789eec",
+        "sha256": "7b59c13a47a3268e3a0ce011843e126d804f905cd79c59ef03319ada6a91b491",
+        "width": 480,
+        "height": 480,
+        "bytes": 47030
+      }
+    },
+    {
+      "path": "/game/pubg-mobile/",
+      "title": "Top Up PUBG Mobile ID: Cek Akun | Gendut Store",
+      "description": "Cari pilihan PUBG Mobile Indonesia di Gendut Store. Cek User ID dan versi game yang sesuai sebelum membuka detail produk serta membeli di situs utama.",
+      "h1": "Top up PUBG Mobile ID: cocokkan akunmu",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up PUBG Mobile ID: Cek Akun | Gendut Store",
+        "description": "Cari pilihan PUBG Mobile Indonesia di Gendut Store. Cek User ID dan versi game yang sesuai sebelum membuka detail produk serta membeli di situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/",
+            "name": "Top Up PUBG Mobile ID: Cek Akun | Gendut Store",
+            "description": "Cari pilihan PUBG Mobile Indonesia di Gendut Store. Cek User ID dan versi game yang sesuai sebelum membuka detail produk serta membeli di situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "PUBG Mobile ID 🇮🇩",
+                "item": "https://gendut-store-panduan.onrender.com/game/pubg-mobile/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "PUBG Mobile ID 🇮🇩",
+        "top up PUBG Mobile ID 🇮🇩"
+      ],
+      "copy": {
+        "slug": "pubg-mobile",
+        "path": "/game/pubg-mobile/",
+        "catalog_slug": "pubg-mobile",
+        "game": "PUBG Mobile ID 🇮🇩",
+        "h1": "Top up PUBG Mobile ID: cocokkan akunmu",
+        "intro": "Mencari UC untuk PUBG Mobile? Halaman ini mengarahkan kamu ke pilihan PUBG Mobile Indonesia. Pastikan game dan akun tujuan sudah sesuai sebelum menyalin User ID dan memilih produk.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "UC pada halaman PUBG Mobile."
+          },
+          {
+            "label": "Data akun",
+            "value": "User ID."
+          },
+          {
+            "label": "Platform dan wilayah",
+            "value": "PUBG Mobile ID Indonesia."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Pastikan yang dipilih adalah PUBG Mobile",
+            "paragraphs": [
+              "Pertahankan kata Mobile saat mencari produk. Pilihan ini mengarah ke PUBG Mobile, sehingga tidak dapat langsung dijadikan pilihan untuk PUBG: BATTLEGROUNDS di PC atau konsol.",
+              "Cocokkan nama game yang kamu mainkan dengan judul halaman produk sebelum memilih UC. Jika platformnya berbeda, kembali ke katalog dan cari produk yang sesuai."
+            ]
+          },
+          {
+            "heading": "Periksa akun tujuan UC",
+            "paragraphs": [
+              "Ambil User ID dari akun PUBG Mobile yang ingin diisi. Bandingkan kembali nomor itu dengan isian formulir, terutama jika kamu menggunakan beberapa akun.",
+              "Pilih produk setelah data akun sesuai, lalu baca rincian dan ringkasan pesanan. Jangan mengandalkan nama panggilan sebagai pengganti nomor User ID yang diminta."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Cek versi game",
+            "text": "Pastikan kebutuhanmu adalah PUBG Mobile, lalu buka produk berlabel Indonesia."
+          },
+          {
+            "title": "Salin User ID",
+            "text": "Gunakan ID dari akun tujuan dan bandingkan angka yang dimasukkan."
+          },
+          {
+            "title": "Pilih UC dan periksa ulang",
+            "text": "Baca detail pilihan serta isian sebelum melanjutkan alur transaksi di situs pusat."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Apakah produk ini untuk PUBG PC?",
+            "answer": "Halaman tujuan ini adalah PUBG Mobile ID Indonesia. Untuk PC atau konsol, cari dan periksa produk yang sesuai melalui katalog pusat."
+          },
+          {
+            "question": "Apa data akun yang diminta?",
+            "answer": "Formulir PUBG Mobile meminta User ID. Siapkan nomor akun tujuan dan periksa lagi sebelum memesan."
+          },
+          {
+            "question": "Apakah UC yang dipilih otomatis cocok dengan semua akun?",
+            "answer": "Cocokkan label Indonesia, akun dan ketentuan pada produk. Jangan menganggap pilihan untuk satu versi atau wilayah berlaku untuk seluruh akun PUBG."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan PUBG Mobile ID",
+          "url": "https://gendutstore.com/id/pubg-mobile"
+        }
+      },
+      "image": {
+        "path": "/assets/pubg-mobile-game.webp",
+        "source_sha256": "4e9783b00634be188441dcec3d3c0773e95b9cf4d9cca673edcfea135c425b2c",
+        "sha256": "1bb644da421de62fa5500d18bd337a4e8dbe4fdfe11f706b9dcaa33e40061b9f",
+        "width": 358,
+        "height": 358,
+        "bytes": 19744
+      }
+    },
+    {
+      "path": "/game/valorant/",
+      "title": "Top Up VALORANT: Cek RIOT#TAG | Gendut Store",
+      "description": "Siapkan RIOT#TAG untuk melihat pilihan VALORANT di Gendut Store. Cek petunjuk akun pada halaman produk, lalu lanjutkan pemesanan melalui situs utama.",
+      "h1": "Top up VALORANT: cek RIOT#TAG",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up VALORANT: Cek RIOT#TAG | Gendut Store",
+        "description": "Siapkan RIOT#TAG untuk melihat pilihan VALORANT di Gendut Store. Cek petunjuk akun pada halaman produk, lalu lanjutkan pemesanan melalui situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/valorant/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/valorant/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/valorant/",
+            "name": "Top Up VALORANT: Cek RIOT#TAG | Gendut Store",
+            "description": "Siapkan RIOT#TAG untuk melihat pilihan VALORANT di Gendut Store. Cek petunjuk akun pada halaman produk, lalu lanjutkan pemesanan melalui situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/valorant/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/valorant/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "VALORANT",
+                "item": "https://gendut-store-panduan.onrender.com/game/valorant/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "VALORANT",
+        "top up VALORANT"
+      ],
+      "copy": {
+        "slug": "valorant",
+        "path": "/game/valorant/",
+        "catalog_slug": "valorant-id",
+        "game": "VALORANT",
+        "h1": "Top up VALORANT: cek RIOT#TAG",
+        "intro": "Saat memilih VALORANT Points, perhatikan format akun yang diminta. Halaman Valorant ID menggunakan kolom ID RIOT#TAG, jadi siapkan informasi akun lengkap sebelum melanjutkan ke pilihan Points.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "VALORANT Points."
+          },
+          {
+            "label": "Kolom akun",
+            "value": "ID RIOT#TAG."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Cek bagian sebelum dan sesudah tanda pagar",
+            "paragraphs": [
+              "Ikuti format RIOT#TAG yang tertera pada formulir. Periksa bagian nama dan tag dari akun tujuan, termasuk tanda pemisahnya; jangan berhenti pada nama tampilan saja.",
+              "Jika kamu menggunakan lebih dari satu akun Riot, cocokkan kembali informasi yang disalin dengan akun VALORANT yang akan digunakan untuk pembelian."
+            ]
+          },
+          {
+            "heading": "Baca pilihan Points di halaman pusat",
+            "paragraphs": [
+              "Pilih berdasarkan rincian produk yang tersedia saat kamu membuka halaman. Kecocokan akun dan ketentuan penggunaan tetap perlu diperiksa; nama Valorant ID tidak dengan sendirinya menjelaskan dukungan semua wilayah atau platform."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Siapkan RIOT#TAG",
+            "text": "Gunakan informasi lengkap akun tujuan, bukan nama tampilan yang belum dilengkapi tag."
+          },
+          {
+            "title": "Buka pilihan VALORANT Points",
+            "text": "Lihat detail produk pada situs pusat Gendut Store."
+          },
+          {
+            "title": "Periksa akun dan pilihan",
+            "text": "Cocokkan format ID, baca ketentuan, lalu ikuti proses pemesanan serta pembayaran yang tersedia."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Apakah cukup mengisi nama sebelum tanda #?",
+            "answer": "Formulir meminta ID RIOT#TAG. Ikuti format lengkap yang diminta dan cek kembali tag akunmu."
+          },
+          {
+            "question": "Apakah Points di halaman ini sama dengan produk Riot game lain?",
+            "answer": "Tujuan halaman ini khusus pilihan VALORANT Points. Jangan memilihnya sebagai pengganti produk game lain hanya karena menggunakan akun Riot."
+          },
+          {
+            "question": "Bagaimana jika belum yakin akun saya cocok?",
+            "answer": "Periksa deskripsi dan ketentuan pada halaman produk pusat. Pastikan kecocokannya sebelum memesan; jangan menebak dari nama game saja."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan VALORANT Points",
+          "url": "https://gendutstore.com/id/valorant-id"
+        }
+      },
+      "image": {
+        "path": "/assets/valorant-id-game.webp",
+        "source_sha256": "01038144c81a63aef1385a0cef8e4be19c8d3a5dc761ada29e906bf7040a2f48",
+        "sha256": "60b664d93513072b57866b7a6e73d22bdc29e67efb43a41328f6c4ed12485f20",
+        "width": 358,
+        "height": 358,
+        "bytes": 35160
+      }
+    },
+    {
+      "path": "/game/genshin-impact/",
+      "title": "Top Up Genshin Impact: ID & Server | Gendut Store",
+      "description": "Cek User ID dan server sebelum memilih produk Genshin Impact di Gendut Store. Baca ketentuan akun dan lanjutkan pembelian pada halaman produk situs utama.",
+      "h1": "Top up Genshin Impact: cek User ID dan server",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up Genshin Impact: ID & Server | Gendut Store",
+        "description": "Cek User ID dan server sebelum memilih produk Genshin Impact di Gendut Store. Baca ketentuan akun dan lanjutkan pembelian pada halaman produk situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/genshin-impact/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/genshin-impact/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/genshin-impact/",
+            "name": "Top Up Genshin Impact: ID & Server | Gendut Store",
+            "description": "Cek User ID dan server sebelum memilih produk Genshin Impact di Gendut Store. Baca ketentuan akun dan lanjutkan pembelian pada halaman produk situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/genshin-impact/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/genshin-impact/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Genshin Impact",
+                "item": "https://gendut-store-panduan.onrender.com/game/genshin-impact/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "Genshin Impact",
+        "top up Genshin Impact"
+      ],
+      "copy": {
+        "slug": "genshin-impact",
+        "path": "/game/genshin-impact/",
+        "catalog_slug": "genshin-impact",
+        "game": "Genshin Impact",
+        "h1": "Top up Genshin Impact: cek User ID dan server",
+        "intro": "Untuk memilih produk Genshin Impact, siapkan User ID dan server akun. Keduanya perlu dicocokkan dengan formulir sebelum kamu menentukan pilihan Genesis Crystals di halaman pusat.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "Genesis Crystals tercantum pada halaman pusat."
+          },
+          {
+            "label": "Data akun",
+            "value": "User ID dan pilihan server."
+          },
+          {
+            "label": "Pilihan server yang terlihat",
+            "value": "Asia, TW_HK_MO, Europe dan America."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "User ID dan server diperiksa bersama",
+            "paragraphs": [
+              "Salin User ID dari akun Genshin Impact tujuan, lalu pilih server yang sesuai. Perhatikan pilihan Asia, TW_HK_MO, Europe atau America yang ditampilkan pada halaman produk.",
+              "Jangan memilih server berdasarkan lokasi kamu sedang berada. Cocokkan dengan informasi akun dan petunjuk produk; jika belum jelas, selesaikan pengecekan sebelum melanjutkan."
+            ]
+          },
+          {
+            "heading": "Baca juga keterangan kecocokan akun",
+            "paragraphs": [
+              "Halaman pusat memuat keterangan tentang region akun. Baca keterangan itu bersama detail produk yang kamu pilih, bukan menyamakan istilah region dan server secara otomatis.",
+              "Pastikan jenis item yang kamu inginkan sesuai nama pilihan yang ditampilkan. Lihat rincian Genesis Crystals dan ringkasan pesanan sebelum mengikuti proses berikutnya."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Siapkan User ID dan server",
+            "text": "Ambil keduanya dari akun Genshin Impact yang dituju."
+          },
+          {
+            "title": "Baca pilihan dan ketentuan",
+            "text": "Cocokkan server, keterangan akun dan jenis produk pada halaman pusat."
+          },
+          {
+            "title": "Tinjau sebelum memesan",
+            "text": "Periksa ulang isian serta pilihan, lalu ikuti alur transaksi di gendutstore.com."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Pilihan server apa yang tercantum?",
+            "answer": "Halaman produk menampilkan Asia, TW_HK_MO, Europe dan America. Pilih sesuai akun dan petunjuk produk yang dibaca saat memesan."
+          },
+          {
+            "question": "Bisakah memilih Asia hanya karena saya sedang di Indonesia?",
+            "answer": "Cocokkan server dengan informasi akunmu. Lokasi kamu saat ini saja tidak cukup untuk menentukan server yang perlu dipilih."
+          },
+          {
+            "question": "Apakah region akun dan server boleh dianggap selalu sama?",
+            "answer": "Baca kedua keterangan sesuai petunjuk produk. Bila informasi akun dan pilihan yang tersedia belum jelas kecocokannya, pastikan terlebih dahulu sebelum membeli."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan Genshin Impact",
+          "url": "https://gendutstore.com/id/genshin-impact"
+        }
+      },
+      "image": {
+        "path": "/assets/genshin-impact-game.webp",
+        "source_sha256": "1f3c292f39a6c730e3acba4be9170fb516753c18539dfbf56d576a0290cf0cde",
+        "sha256": "0cdc58866878a2040814a3b4a9f9db1fe1132d71dbb94aff98aaeeb5a2d4b6d8",
+        "width": 358,
+        "height": 358,
+        "bytes": 40384
+      }
+    },
+    {
+      "path": "/game/honor-of-kings/",
+      "title": "Top Up Honor of Kings: Cek Akun | Gendut Store",
+      "description": "Telusuri pilihan Honor of Kings di Gendut Store. Siapkan User ID, cocokkan data dan ketentuan yang diminta, lalu lanjutkan pembelian melalui situs utama.",
+      "h1": "Top up Honor of Kings: cek data akun",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Top Up Honor of Kings: Cek Akun | Gendut Store",
+        "description": "Telusuri pilihan Honor of Kings di Gendut Store. Siapkan User ID, cocokkan data dan ketentuan yang diminta, lalu lanjutkan pembelian melalui situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/",
+            "name": "Top Up Honor of Kings: Cek Akun | Gendut Store",
+            "description": "Telusuri pilihan Honor of Kings di Gendut Store. Siapkan User ID, cocokkan data dan ketentuan yang diminta, lalu lanjutkan pembelian melalui situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Honor of Kings",
+                "item": "https://gendut-store-panduan.onrender.com/game/honor-of-kings/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "Honor of Kings",
+        "top up Honor of Kings"
+      ],
+      "copy": {
+        "slug": "honor-of-kings",
+        "path": "/game/honor-of-kings/",
+        "catalog_slug": "honor-of-kings",
+        "game": "Honor of Kings",
+        "h1": "Top up Honor of Kings: cek data akun",
+        "intro": "Halaman Honor of Kings di Gendut Store memuat pilihan Tokens dan Weekly Cards. Tentukan jenis produk yang kamu butuhkan, lalu cocokkan User ID akun sebelum melanjutkan pemesanan.",
+        "product_facts": [
+          {
+            "label": "Pilihan produk",
+            "value": "Tokens dan Weekly Cards."
+          },
+          {
+            "label": "Data akun",
+            "value": "User ID."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Bedakan Tokens dan Weekly Cards",
+            "paragraphs": [
+              "Baca nama pilihan sebelum menentukan item. Tokens dan Weekly Cards tercantum sebagai pilihan produk; jangan menganggap semuanya hanya berbeda nominal.",
+              "Periksa rincian serta ketentuan pilihanmu di halaman pusat. Halaman ini tidak merinci manfaat kartu atau jadwal penerimaan; gunakan keterangan produk yang tersedia saat memesan."
+            ]
+          },
+          {
+            "heading": "Cocokkan User ID dengan akun Honor of Kings",
+            "paragraphs": [
+              "Ambil User ID dari informasi akun tujuan dan bandingkan angka yang diisi pada formulir. Gunakan data Honor of Kings yang sesuai, bukan ID game lain yang tampak serupa.",
+              "Jika belum yakin terhadap kecocokan akun atau wilayah, baca kembali ketentuan produk sebelum melanjutkan."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Tentukan jenis produk",
+            "text": "Baca pilihan Tokens atau Weekly Cards pada situs pusat."
+          },
+          {
+            "title": "Periksa User ID",
+            "text": "Bandingkan isian dengan akun Honor of Kings tujuan."
+          },
+          {
+            "title": "Tinjau detail pilihan",
+            "text": "Cek ketentuan dan ringkasan pesanan, lalu ikuti langkah pembelian di situs pusat."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Apakah Tokens dan Weekly Cards pilihan yang sama?",
+            "answer": "Keduanya ditampilkan sebagai pilihan berbeda. Baca rincian masing-masing agar kamu memilih jenis produk yang dimaksud."
+          },
+          {
+            "question": "Apa data akun yang perlu disiapkan?",
+            "answer": "Formulir produk meminta User ID. Siapkan ID akun Honor of Kings tujuan dan ikuti petunjuk yang tertera."
+          },
+          {
+            "question": "Apakah halaman ini menjelaskan dukungan semua region?",
+            "answer": "Kecocokan akun mengikuti keterangan produk di situs pusat. Pastikan terlebih dahulu jika akunmu memerlukan ketentuan wilayah tertentu."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan Honor of Kings",
+          "url": "https://gendutstore.com/id/honor-of-kings"
+        }
+      },
+      "image": {
+        "path": "/assets/honor-of-kings-game.webp",
+        "source_sha256": "3ca7f0e282e52fe2acd4e337ef2d5ae274ba0b9768c7e358ede3a6c8d5d1788e",
+        "sha256": "908724ecad2533563a305066911b6479d6e246e039422d3e70bd89ca23d7b8db",
+        "width": 358,
+        "height": 358,
+        "bytes": 29372
+      }
+    },
+    {
+      "path": "/game/voucher-minecraft/",
+      "title": "Voucher Minecraft: Cek Produk & Edisi | Gendut Store",
+      "description": "Pahami pilihan Voucher Minecraft di Gendut Store. Bedakan produk PC/Mac dan Minecoins, cek edisi serta ketentuannya, lalu buka detail di situs utama.",
+      "h1": "Voucher Minecraft: cek jenis produk dan edisi",
+      "openGraph": {
+        "type": "website",
+        "locale": "id_ID",
+        "site_name": "Gendut Store — Pilihan Game & Voucher",
+        "title": "Voucher Minecraft: Cek Produk & Edisi | Gendut Store",
+        "description": "Pahami pilihan Voucher Minecraft di Gendut Store. Bedakan produk PC/Mac dan Minecoins, cek edisi serta ketentuannya, lalu buka detail di situs utama.",
+        "url": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/",
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "twitterCard": "summary",
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://gendut-store-panduan.onrender.com/#website",
+            "url": "https://gendut-store-panduan.onrender.com/",
+            "name": "Gendut Store — Pilihan Game & Voucher",
+            "inLanguage": "id"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/",
+            "name": "Voucher Minecraft: Cek Produk & Edisi | Gendut Store",
+            "description": "Pahami pilihan Voucher Minecraft di Gendut Store. Bedakan produk PC/Mac dan Minecoins, cek edisi serta ketentuannya, lalu buka detail di situs utama.",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@id": "https://gendut-store-panduan.onrender.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/#breadcrumb"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Voucher Minecraft",
+                "item": "https://gendut-store-panduan.onrender.com/game/voucher-minecraft/"
+              }
+            ]
+          }
+        ]
+      },
+      "target_keywords": [
+        "voucher Minecraft",
+        "Minecraft PC Mac",
+        "Minecoins"
+      ],
+      "copy": {
+        "slug": "voucher-minecraft",
+        "path": "/game/voucher-minecraft/",
+        "catalog_slug": "voucher-minecraft",
+        "game": "Voucher Minecraft",
+        "h1": "Voucher Minecraft: cek jenis produk dan edisi",
+        "intro": "Pilihan Minecraft perlu dibaca berdasarkan jenis produknya. Halaman Voucher Minecraft memuat pilihan berlabel PC/Mac serta Minecoins; cocokkan nama item, edisi dan platform yang kamu gunakan sebelum membeli.",
+        "product_facts": [
+          {
+            "label": "Kategori",
+            "value": "Voucher Minecraft."
+          },
+          {
+            "label": "Label pilihan yang terlihat",
+            "value": "PC/Mac dan Minecoins."
+          },
+          {
+            "label": "Data kontak pada formulir",
+            "value": "Email dan No Hp."
+          }
+        ],
+        "sections": [
+          {
+            "heading": "Mulai dari item yang ingin kamu gunakan",
+            "paragraphs": [
+              "Baca label lengkap pada setiap pilihan. PC/Mac dan Minecoins tidak boleh langsung diperlakukan sebagai satu produk dengan penggunaan yang sama.",
+              "Cocokkan deskripsi dengan edisi dan platform Minecraft yang kamu gunakan. Jangan memilih hanya karena semua item berada di halaman bernama Minecraft."
+            ]
+          },
+          {
+            "heading": "Periksa ketentuan penggunaan sebelum memesan",
+            "paragraphs": [
+              "Baca apa yang akan diterima dan petunjuk penggunaannya pada item pilihanmu. Nama kategori voucher saja belum menjelaskan cara penukaran seluruh produk.",
+              "Formulir memuat data kontak seperti Email dan No Hp. Isi sesuai kolom yang diminta, lalu periksa kembali jenis item serta ketentuannya sebelum melanjutkan."
+            ]
+          }
+        ],
+        "steps": [
+          {
+            "title": "Tentukan edisi dan platform",
+            "text": "Pastikan Minecraft yang kamu gunakan sebelum memilih item."
+          },
+          {
+            "title": "Baca label PC/Mac atau Minecoins",
+            "text": "Cocokkan rincian produk serta petunjuk penggunaannya di situs pusat."
+          },
+          {
+            "title": "Periksa item dan data kontak",
+            "text": "Ikuti formulir dan alur pembelian pusat setelah kecocokannya jelas."
+          }
+        ],
+        "faq": [
+          {
+            "question": "Apakah semua pilihan bisa digunakan di semua edisi Minecraft?",
+            "answer": "Jangan menganggapnya demikian. Cocokkan label, edisi, platform dan ketentuan item yang dipilih sebelum membeli."
+          },
+          {
+            "question": "Apakah PC/Mac dan Minecoins dapat dianggap saling menggantikan?",
+            "answer": "Keduanya muncul sebagai pilihan berbeda pada halaman produk. Baca fungsi serta ketentuannya masing-masing dan pilih sesuai kebutuhanmu."
+          },
+          {
+            "question": "Apakah semua voucher langsung berupa kode atau ditukar otomatis?",
+            "answer": "Cara penggunaan mengikuti item yang kamu pilih. Periksa apa yang diterima dan petunjuk penukaran pada halaman pusat; jangan mengasumsikan satu alur untuk seluruh pilihan."
+          }
+        ],
+        "cta": {
+          "label": "Lihat pilihan Voucher Minecraft",
+          "url": "https://gendutstore.com/id/voucher-minecraft"
+        }
+      },
+      "image": {
+        "path": "/assets/voucher-minecraft-game.webp",
+        "source_sha256": "86ce2ce203e86e07c494ced5d5750ea4ba5861138e21d6ca5388fc8fa393c273",
+        "sha256": "4ca03dabab4a73db306ef2b0f5be9de0a6cf32ce4f8a0b8c64917af932597c26",
+        "width": 480,
+        "height": 480,
+        "bytes": 41328
+      }
+    }
+  ]
+}

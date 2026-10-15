@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Run renderer and approval adapter regressions
+        run: python3 -m unittest discover -s tests -v
       - name: Check SEO metadata and public assets
         run: python3 scripts/build-static.py --origin https://build-check.invalid --output /tmp/gendut-store-check
       - name: Check browser script syntax

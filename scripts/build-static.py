@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""Build the public website with the host's actual address. No account access."""
+"""Validate and build public pages with host-specific SEO and release evidence."""
 import argparse
+from datetime import datetime, timezone
 from html import escape, unescape
 from html.parser import HTMLParser
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import shutil
+import importlib.util
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-
 
 def validate_origin(value):
     parsed = urlsplit(value or '')
@@ -23,84 +25,104 @@ def validate_origin(value):
         raise ValueError('Alamat HTTPS hosting publik belum tersedia atau tidak sesuai.')
     return 'https://' + host.lower()
 
-
 class Page(HTMLParser):
     def __init__(self):
-        super().__init__()
-        self.assets = []
-        self.headings = 0
-
+        super().__init__(); self.assets = []; self.links = []; self.headings = 0; self.in_h1=False; self.heading_text=[]; self.ids=set()
     def handle_starttag(self, tag, pairs):
         attrs = dict(pairs)
-        if tag == 'h1':
-            self.headings += 1
-        if attrs.get('src'):
-            self.assets.append(attrs['src'])
-        if tag == 'link' and attrs.get('rel') in ('stylesheet', 'icon', 'apple-touch-icon'):
-            self.assets.append(attrs['href'])
+        if tag == 'h1': self.headings += 1; self.in_h1=True
+        if attrs.get('id'): self.ids.add(attrs['id'])
+        if attrs.get('src'): self.assets.append(attrs['src'])
+        if tag == 'link' and attrs.get('rel') in ('stylesheet', 'icon', 'apple-touch-icon'): self.assets.append(attrs['href'])
+        if tag == 'a' and attrs.get('href'): self.links.append(attrs['href'])
 
+    def handle_endtag(self, tag):
+        if tag=='h1': self.in_h1=False
+    def handle_data(self, value):
+        if self.in_h1: self.heading_text.append(value)
 
 def build(address, output):
     address = validate_origin(address)
     source = ROOT / 'dist'
-    if output.exists() and any(output.iterdir()):
-        raise ValueError('Direktori output harus kosong; hasil lama tidak ditimpa.')
-    html = (source / 'index.html').read_text()
-    title = unescape(re.search(r'<title>(.*?)</title>', html, re.S).group(1))
-    description = unescape(re.search(r'<meta name="description" content="([^"]+)"', html).group(1))
-    html = re.sub(r'\s*<link rel="canonical"[^>]*>', '', html)
-    html = re.sub(r'\s*<meta property="og:(?:url|image(?::[a-z]+)?)"[^>]*>', '', html)
-    html = re.sub(r'\s*<script type="application/ld\+json">[\s\S]*?</script>', '', html)
-    metadata = '\n'.join([
-        '<link rel="canonical" href="' + escape(address + '/', quote=True) + '">',
-        '<meta property="og:url" content="' + escape(address + '/', quote=True) + '">',
-        '<meta property="og:image" content="' + escape(address + '/assets/gendut-store-social.png', quote=True) + '">',
-        '<meta property="og:image:width" content="1080">',
-        '<meta property="og:image:height" content="1080">',
-        '<meta property="og:image:alt" content="Logo Gendut Store">',
-        '<script type="application/ld+json">' + json.dumps({
-            '@context': 'https://schema.org', '@graph': [
-                {'@type': 'WebSite', '@id': address + '/#website', 'url': address + '/',
-                 'name': 'Panduan Gendut Store', 'inLanguage': 'id'},
-                {'@type': 'WebPage', '@id': address + '/#webpage', 'url': address + '/',
-                 'name': title, 'description': description, 'inLanguage': 'id',
-                 'isPartOf': {'@id': address + '/#website'}}
-            ]}, ensure_ascii=False).replace('</', '<\\/') + '</script>'
-    ])
-    html = html.replace('</head>', metadata + '\n</head>')
-    html = re.sub(r'(\b(?:src|href)=")/(?!/)', r'\1', html)
-    if '.chatgpt.site' in html:
-        raise ValueError('Masih ada alamat hosting lama pada website publik.')
-    page = Page()
-    page.feed(html)
-    if page.headings != 1 or not title or not description:
-        raise ValueError('Judul, deskripsi, dan satu H1 diperlukan.')
-    for asset in page.assets:
-        path = source / asset
-        if not path.is_file() or not path.resolve().is_relative_to(source.resolve()):
-            raise ValueError('Aset lokal tidak valid: ' + asset)
+    site = json.loads((ROOT / 'content/site.json').read_text())
+    if output.resolve() == source.resolve() or output.resolve().is_relative_to(source.resolve()): raise ValueError('Output harus di luar sumber dist.')
+    if output.exists() and any(output.iterdir()): raise ValueError('Direktori output harus kosong; hasil lama tidak ditimpa.')
+    pages = site['pages']; approval_proofs={}
+    if len(pages)>200: raise ValueError('Maksimum200 halaman per rilis.')
+    for page in pages:
+        words=page.get('target_keywords')
+        if not isinstance(words,list) or len(words)>12 or any(not isinstance(w,str) or not 1<=len(w)<=100 for w in words): raise ValueError('Target keyword harus ringkas dan sesuai kontrak publik.')
+    approval_spec=importlib.util.spec_from_file_location('approved_pages',ROOT/'scripts/approved-pages.py'); approvals=importlib.util.module_from_spec(approval_spec); approval_spec.loader.exec_module(approvals)
+    for page in pages:
+        if page.get('approval_export'):
+            export_path=ROOT/page['approval_export']
+            if not export_path.resolve().is_relative_to((ROOT/'content/approved').resolve()) or export_path.is_symlink(): raise ValueError('Path export tidak valid.')
+            document,proof=approvals.public_snapshot(export_path,page['path'])
+            if any(page[key]!=document[key] for key in ['title','description','target_keywords']) or page['h1']!=document['title']: raise ValueError('Metadata tidak sesuai snapshot yang disetujui.')
+            page['approved_document']=document;approval_proofs[page['path']]=proof
+    paths = {p['path'] for p in pages}
+    if not pages or len(paths) != len(pages) or '/' not in paths: raise ValueError('Halaman beranda dan path unik diperlukan.')
+    for path in paths:
+        if path != '/' and not re.fullmatch(r'/game/[a-z0-9]+(?:-[a-z0-9]+)*/', path): raise ValueError('Path halaman tidak valid.')
     output.mkdir(parents=True, exist_ok=True)
     allowed = {'.html', '.css', '.js', '.png', '.webp', '.svg', '.ico', '.xml', '.txt'}
     for path in sorted(source.rglob('*')):
-        if not path.is_file() or path.name in ('index.html', 'robots.txt', 'sitemap.xml'):
-            continue
-        if path.is_symlink() or path.suffix not in allowed or any(part.startswith('.') for part in path.relative_to(source).parts):
-            raise ValueError('Berkas yang bukan aset publik ditolak.')
-        target = output / path.relative_to(source)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(path, target)
-    (output / 'index.html').write_text(html)
-    (output / 'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: ' + address + '/sitemap.xml\n')
-    (output / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>' + escape(address + '/') + '</loc></url></urlset>\n')
-    return {'output': str(output), 'origin': address, 'files': sum(p.is_file() for p in output.rglob('*')), 'published': False}
-
+        if not path.is_file() or path.suffix == '.html' or path.name in ('robots.txt', 'sitemap.xml'): continue
+        if path.is_symlink() or path.suffix not in allowed or any(part.startswith('.') for part in path.relative_to(source).parts): raise ValueError('Berkas bukan aset publik ditolak.')
+        target = output / path.relative_to(source); target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(path, target)
+    module_spec=importlib.util.spec_from_file_location('render_pages',ROOT/'scripts/render-pages.py')
+    renderer=importlib.util.module_from_spec(module_spec); module_spec.loader.exec_module(renderer)
+    rendered=renderer.render_pages(site)
+    records=[]
+    for spec in pages:
+        local = spec['path'].lstrip('/') + 'index.html'
+        html = rendered[local]
+        title = unescape(re.search(r'<title>(.*?)</title>', html, re.S).group(1))
+        description = unescape(re.search(r'<meta name="description" content="([^"]+)"', html).group(1))
+        if title != spec['title'] or description != spec['description']: raise ValueError('Metadata sumber berbeda dari kontrak halaman: '+local)
+        html = re.sub(r'\s*<link rel="canonical"[^>]*>', '', html)
+        html = re.sub(r'\s*<meta property="og:(?:url|image(?::[a-z]+)?)"[^>]*>', '', html)
+        html = re.sub(r'\s*<script type="application/ld\+json">[\s\S]*?</script>', '', html)
+        graph = json.loads(json.dumps(spec['jsonLd'],ensure_ascii=False).replace(site['origin'], address))
+        canonical = address + spec['path']; og = spec['openGraph']
+        metadata = '\n'.join([
+            '<link rel="canonical" href="'+escape(canonical,quote=True)+'">',
+            '<meta property="og:url" content="'+escape(canonical,quote=True)+'">',
+            '<meta property="og:image" content="'+escape(og['image'].replace(site['origin'], address),quote=True)+'">',
+            '<meta property="og:image:width" content="'+str(og['image_width'])+'">',
+            '<meta property="og:image:height" content="'+str(og['image_height'])+'">',
+            '<meta property="og:image:alt" content="'+escape(og['image_alt'],quote=True)+'">',
+            '<script type="application/ld+json">'+json.dumps(graph,ensure_ascii=False).replace('</','<\\/')+'</script>'
+        ])
+        html = html.replace('</head>', metadata+'\n</head>')
+        if '.chatgpt.site' in html: raise ValueError('Alamat hosting privat tidak boleh berada di website publik.')
+        page=Page(); page.feed(html)
+        if page.headings != 1 or ''.join(page.heading_text)!=spec['h1']: raise ValueError('Satu H1 sesuai copy diperlukan: '+local)
+        for asset in page.assets:
+            path=source/asset.lstrip('/')
+            if not path.is_file() or not path.resolve().is_relative_to(source.resolve()): raise ValueError('Aset lokal tidak valid: '+asset)
+        for link in page.links:
+            parsed=urlsplit(link)
+            if parsed.scheme or parsed.netloc:
+                if parsed.scheme!='https' or parsed.hostname!='gendutstore.com' or parsed.username or parsed.password or parsed.port or parsed.query or parsed.fragment: raise ValueError('Tautan produk pusat tidak valid: '+link)
+                if parsed.path not in ['/', '/games', '/terms'] and not re.fullmatch(r'/id/[A-Za-z0-9_-]+',parsed.path): raise ValueError('Path produk tidak valid: '+link)
+            elif parsed.path and parsed.path not in paths: raise ValueError('Tautan halaman lokal tidak valid: '+link)
+            if parsed.fragment and (not parsed.path or parsed.path==spec['path']) and parsed.fragment not in page.ids: raise ValueError('Jangkar tidak ditemukan: '+link)
+        target=output/local; target.parent.mkdir(parents=True,exist_ok=True); target.write_text(html)
+        records.append({'slug':spec['path'],'path':spec['path'],'title':title,'description':description,'target_keywords':spec['target_keywords'],'canonical':canonical,'source_path':'content/site.json','content_sha256':hashlib.sha256(target.read_bytes()).hexdigest(),**approval_proofs.get(spec['path'],{})})
+    (output/'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: '+address+'/sitemap.xml\n')
+    (output/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+escape(address+p['path'])+'</loc></url>' for p in pages)+'</urlset>\n')
+    commit=os.environ.get('RENDER_GIT_COMMIT') or None
+    if commit and not re.fullmatch('[0-9a-f]{40}',commit): raise ValueError('RENDER_GIT_COMMIT tidak valid.')
+    assets=[{'path':'/'+str(p.relative_to(output)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted((output/'assets').rglob('*')) if p.is_file()]
+    manifest={'schema_version':1,'origin':address,'repository':'phantomx567/gendut-store-seo','branch':'main','source_commit':commit,'generated_at':datetime.now(timezone.utc).isoformat(),'pages':records,'assets':assets,'deployment':{'provider':'Render','commit':commit,'status':'built','url':address}}
+    (output/'site-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+    return {'output':str(output),'origin':address,'pages':len(records),'files':sum(p.is_file() for p in output.rglob('*')),'source_commit':commit,'published':False}
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--origin', default=os.environ.get('SITE_ORIGIN') or os.environ.get('RENDER_EXTERNAL_URL'))
-    parser.add_argument('--output', type=Path, default=ROOT / 'public')
-    args = parser.parse_args()
-    try:
-        print(json.dumps(build(args.origin, args.output)))
-    except (ValueError, OSError) as error:
-        parser.exit(1, str(error) + '\n')
+    parser.add_argument('--output',type=Path,default=ROOT/'public')
+    args=parser.parse_args()
+    try: print(json.dumps(build(args.origin,args.output)))
+    except (ValueError,OSError,KeyError) as error: parser.exit(1,str(error)+'\n')
