@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: gendut-store-panduan
+    runtime: static
+    buildCommand: python3 scripts/build-static.py
+    staticPublishPath: ./public
+    autoDeployTrigger: commit
+    envVars:
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
