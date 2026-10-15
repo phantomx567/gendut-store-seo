@@ -24,10 +24,10 @@ class StaticBuild(unittest.TestCase):
   self.original_root=build_module.ROOT;build_module.ROOT=self.root
   self.site=json.loads((self.root/'content/site.json').read_text());self.counter=0
  def tearDown(self):build_module.ROOT=self.original_root;self.temp.cleanup()
- def run_build(self,commit=None):
+ def run_build(self,commit=None,origin='https://preview.example.org'):
   (self.root/'content/site.json').write_text(json.dumps(self.site,ensure_ascii=False))
   self.counter+=1;out=self.root/('build-'+str(self.counter))
-  with patch.dict('os.environ',{'RENDER_GIT_COMMIT':commit or ''}):build_module.build('https://preview.example.org',out)
+  with patch.dict('os.environ',{'RENDER_GIT_COMMIT':commit or ''}):build_module.build(origin,out)
   return out,json.loads((out/'site-manifest.json').read_text())
  def test_eight_pages_have_exact_hashes_seo_faq_assets_and_sitemap(self):
   out,manifest=self.run_build();self.assertEqual(len(manifest['pages']),8);self.assertIsNone(manifest['source_commit']);self.assertEqual(manifest['deployment']['status'],'built')
@@ -109,5 +109,28 @@ class StaticBuild(unittest.TestCase):
   saved=json.loads(snapshot)
   self.assertEqual(saved['canonical_public_document_json'],export['canonical_public_document_json'])
   self.assertEqual(hashlib.sha256(saved['canonical_public_document_json'].encode()).hexdigest(),export['public_content_hash'])
+
+ def test_google_verification_default_empty_keeps_all_eight_html_bytes(self):
+  first,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
+  for value in [None,{}, {'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':''}]:
+   (self.root/'content/google-verification.json').write_text(json.dumps(value))
+   out,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
+   for html in first.rglob('*.html'):
+    self.assertEqual(html.read_bytes(),(out/html.relative_to(first)).read_bytes())
+    self.assertNotIn(b'google-site-verification',html.read_bytes())
+ def test_google_private_export_imports_only_public_meta_and_preserves_other_pages(self):
+  spec=importlib.util.spec_from_file_location('google_verification',self.root/'scripts/google-verification.py');adapter=importlib.util.module_from_spec(spec);spec.loader.exec_module(adapter);adapter.ROOT=self.root
+  before,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
+  artifact={'method':'html_meta','value':'isolated-test-public-value-only','provided_by_google':True};raw=json.dumps(artifact,separators=(',',':'));export={'schema_version':1,'property_id':adapter.PROPERTY,'artifact':artifact,'canonical_artifact_json':raw,'artifact_sha256':hashlib.sha256(raw.encode()).hexdigest(),'source':'owner_provided_google_public_verification','private_canary':'private-only-never-commit'}
+  file=self.root/'owner-export.json';file.write_text(json.dumps(export));adapter.import_export(file)
+  saved=json.loads((self.root/'content/google-verification.json').read_text());self.assertEqual(set(saved),{'property_id','method','value'});self.assertNotIn('private-only-never-commit',json.dumps(saved))
+  out,_=self.run_build(origin='https://gendut-store-panduan.onrender.com');tag='<meta name="google-site-verification" content="isolated-test-public-value-only">';home=(out/'index.html').read_text();self.assertEqual(home.count(tag),1);self.assertIn(tag,home.split('</head>')[0]);self.assertEqual(home.replace('\n'+tag,''),(before/'index.html').read_text())
+  for html in (before/'game').rglob('*.html'):self.assertEqual(html.read_bytes(),(out/html.relative_to(before)).read_bytes())
+  artifact['value']='changed-public-value';export['artifact']=artifact;file.write_text(json.dumps(export))
+  with self.assertRaises(ValueError):adapter.import_export(file)
+ def test_google_public_config_rejects_injection_foreign_property_and_private_keys(self):
+  for config in [{'property_id':'https://other.invalid/','method':'html_meta','value':'isolated-only-value'},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':'x\"/><script>bad</script>'},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':'isolated-only-value','provided_by_google':True},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_file','value':'isolated-only-value'}]:
+   (self.root/'content/google-verification.json').write_text(json.dumps(config))
+   with self.assertRaises(ValueError):self.run_build()
 
 if __name__=='__main__':unittest.main(verbosity=2)

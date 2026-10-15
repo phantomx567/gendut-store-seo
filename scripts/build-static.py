@@ -47,6 +47,8 @@ def build(address, output):
     site = json.loads((ROOT / 'content/site.json').read_text())
     if output.resolve() == source.resolve() or output.resolve().is_relative_to(source.resolve()): raise ValueError('Output harus di luar sumber dist.')
     if output.exists() and any(output.iterdir()): raise ValueError('Direktori output harus kosong; hasil lama tidak ditimpa.')
+    verification_spec=importlib.util.spec_from_file_location('google_verification',ROOT/'scripts/google-verification.py'); verification=importlib.util.module_from_spec(verification_spec); verification_spec.loader.exec_module(verification)
+    google_meta=verification.load_public(ROOT/'content/google-verification.json')
     pages = site['pages']; approval_proofs={}
     if len(pages)>200: raise ValueError('Maksimum200 halaman per rilis.')
     for page in pages:
@@ -94,6 +96,8 @@ def build(address, output):
             '<meta property="og:image:alt" content="'+escape(og['image_alt'],quote=True)+'">',
             '<script type="application/ld+json">'+json.dumps(graph,ensure_ascii=False).replace('</','<\\/')+'</script>'
         ])
+        if google_meta and address+'/'==google_meta['property_id'] and spec['path']=='/':
+            metadata+='\n<meta name="google-site-verification" content="'+escape(google_meta['value'],quote=True)+'">'
         html = html.replace('</head>', metadata+'\n</head>')
         if '.chatgpt.site' in html: raise ValueError('Alamat hosting privat tidak boleh berada di website publik.')
         page=Page(); page.feed(html)
