@@ -15,7 +15,7 @@ def parse_snapshot(value, expected_path=None):
     if not isinstance(raw,str): raise ValueError('Canonical public document diperlukan.')
     digest=hashlib.sha256(raw.encode('utf-8')).hexdigest();document=json.loads(raw)
     article=document.get('page_type')=='article'
-    fields=articles.ARTICLE_FIELDS if article else PUBLIC_FIELDS
+    fields=(articles.ARTICLE_FIELDS|({'banner'} if 'banner' in document else set())) if article else PUBLIC_FIELDS
     if set(document)!=fields or value.get('schema_version')!=1 or digest!=value.get('public_content_hash'): raise ValueError('Public content/hash tidak sesuai whitelist.')
     revision=value.get('revision');page_id=value.get('page_id')
     if type(revision)!=int or revision<1 or not isinstance(page_id,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,160}',page_id): raise ValueError('Identitas snapshot tidak valid.')

@@ -1,10 +1,13 @@
 """Public article contract and derived metadata; no draft or private receipts."""
+import importlib.util
+from pathlib import Path
 from datetime import datetime
 from html import escape
 import ipaddress
 import re
 from urllib.parse import urlsplit
 
+banner_spec=importlib.util.spec_from_file_location('article_banner',Path(__file__).with_name('article-banner.py'));banners=importlib.util.module_from_spec(banner_spec);banner_spec.loader.exec_module(banners)
 ARTICLE_FIELDS={'page_type','path','title','description','target_keywords','content','sources','related_paths'}
 ARTICLE_PATH=r'/artikel/[a-z0-9]+(?:-[a-z0-9]+)*/'
 
@@ -30,8 +33,9 @@ def source_url(value):
     return value
 
 def validate_article(doc):
-    if set(doc)!=ARTICLE_FIELDS or doc.get('page_type')!='article' or not re.fullmatch(ARTICLE_PATH,doc.get('path','')):
+    if set(doc) not in (ARTICLE_FIELDS,ARTICLE_FIELDS|{'banner'}) or doc.get('page_type')!='article' or not re.fullmatch(ARTICLE_PATH,doc.get('path','')):
         raise ValueError('Whitelist/path artikel tidak valid.')
+    if 'banner' in doc:banners.descriptor(doc['banner'])
     content=doc.get('content');sources=doc.get('sources');related=doc.get('related_paths')
     if not isinstance(content,dict) or set(content)!={'lead','sections'}: raise ValueError('Artikel memerlukan lead dan sections.')
     text(content['lead'],20,3000)
@@ -63,13 +67,16 @@ def validate_article(doc):
 def metadata(doc,origin):
     route=doc['path'];url=origin+route
     return {'@context':'https://schema.org','@graph':[
-        {'@type':'Article','@id':url+'#article','url':url,'mainEntityOfPage':url,'headline':doc['title'],'description':doc['description'],'inLanguage':'id','citation':[s['url'] for s in doc['sources']]},
+        {'@type':'Article','@id':url+'#article','url':url,'mainEntityOfPage':url,'headline':doc['title'],'description':doc['description'],'inLanguage':'id','citation':[s['url'] for s in doc['sources']],**({'image':{'@type':'ImageObject','url':origin+doc['banner']['path'],'width':doc['banner']['width'],'height':doc['banner']['height'],'caption':doc['banner']['alt']}} if doc.get('banner') else {})},
         {'@type':'BreadcrumbList','@id':url+'#breadcrumb','itemListElement':[{'@type':'ListItem','position':1,'name':'Beranda','item':origin+'/'},{'@type':'ListItem','position':2,'name':'Artikel','item':origin+'/artikel/'},{'@type':'ListItem','position':3,'name':doc['title'],'item':url}]}
     ]}
 
 def render_article(doc,pages):
     e=lambda value:escape(str(value),quote=True)
     parts=['<main id="konten" class="editorial wrap"><nav class="editorial-breadcrumb" aria-label="Breadcrumb"><a href="/">Beranda</a><span aria-hidden="true">/</span><a href="/artikel/">Artikel</a></nav><article><header class="editorial-heading"><p class="eyebrow">Artikel Gendut Store</p><h1>'+e(doc['title'])+'</h1><p class="editorial-lead">'+e(doc['content']['lead'])+'</p></header><nav class="editorial-toc" aria-label="Isi artikel"><h2>Dalam artikel ini</h2><ol>']
+    if doc.get('banner'):
+        b=doc['banner'];figure='<figure class="editorial-banner"><img src="'+e(b['path'])+'" alt="'+e(b['alt'])+'" width="'+str(b['width'])+'" height="'+str(b['height'])+'" decoding="async" fetchpriority="high"></figure>'
+        parts[0]=parts[0].replace('</header><nav', '</header>'+figure+'<nav')
     parts.extend('<li><a href="#bagian-'+str(i)+'">'+e(s['heading'])+'</a></li>' for i,s in enumerate(doc['content']['sections'],1));parts.append('</ol></nav>')
     for i,section in enumerate(doc['content']['sections'],1):
         parts.append('<section class="editorial-section" id="bagian-'+str(i)+'"><h2>'+e(section['heading'])+'</h2>')

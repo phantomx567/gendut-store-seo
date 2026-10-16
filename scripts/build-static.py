@@ -68,6 +68,13 @@ def build(address, output):
         elif page.get('page_type')=='article' or page['path'].startswith('/artikel/'):
             raise ValueError('Artikel memerlukan snapshot approved; draft tidak boleh dibangun.')
     article_pages=[p for p in pages if p.get('page_type')=='article']
+    banner_paths=set()
+    for page in article_pages:
+        banner=page['approved_document'].get('banner')
+        if banner:
+            banner_file=source/banner['path'].lstrip('/')
+            if not banner_file.resolve().is_relative_to(source.resolve()) or any(p.is_symlink() for p in [banner_file,*banner_file.parents] if p!=source and source in p.parents): raise ValueError('Path asset banner publik tidak aman.')
+            approvals.articles.banners.local_bytes(banner_file,banner);banner_paths.add(banner['path'].lstrip('/'))
     if article_pages:
         derived=[approval_proofs[p['path']] for p in sorted(article_pages,key=lambda p:p['path'])]
         hub={'path':'/artikel/','page_type':'article_index','title':'Artikel dan panduan bermain','description':'Penjelasan dan langkah praktis berdasarkan sumber yang dicantumkan pada setiap artikel Gendut Store.','h1':'Artikel dan panduan bermain','target_keywords':['artikel game'],'derived_from':derived,'openGraph':pages[0]['openGraph'],'jsonLd':{'@context':'https://schema.org','@type':'CollectionPage','name':'Artikel dan panduan bermain','url':site['origin']+'/artikel/'}}
@@ -83,6 +90,7 @@ def build(address, output):
     for path in sorted(source.rglob('*')):
         if not path.is_file() or path.name in ('robots.txt', 'sitemap.xml'): continue
         relative = path.relative_to(source)
+        if str(relative).startswith('assets/articles/') and str(relative) not in banner_paths:continue
         # Owner-provided Google challenges are root files, not rendered pages.
         google_file = path.suffix == '.html' and len(relative.parts) == 1 and re.fullmatch(r'google[A-Za-z0-9_-]{4,128}\.html', path.name)
         if path.suffix == '.html' and not google_file: continue

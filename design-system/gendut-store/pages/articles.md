@@ -52,3 +52,8 @@ Command: `python3 /workspace/github/gendut-store-seo/.agents/skills/ui-ux-pro-ma
 Use the existing dark purple tokens and system font; no new assets, fonts, parallax or runtime. Single reading column at 70ch, line-height 1.75, visible table of contents and source citations, semantic H1→H2, natural wrapping, mint focus and restrained surfaces. No catalog CTA injection or fabricated author/date. Public article content is escaped typed plain text. Hub appears only with approved built articles. Source timestamps describe research checks, not Google freshness or article publication time. Existing eight HTML outputs remain identical when no approved article is present.
 
 Read pinned SKILL, MASTER, PROJECT-DECISIONS, quick-reference web accessibility/layout/type rules and native-scoped pro-rules before implementation. Independent actual-browser QA remains required at repository breakpoints and 200% text size; generated recommendations are not QA proof.
+
+
+## Banner revision
+
+Read the same pinned skill/resources before this component revision. Targeted query `meaningful image reserved dimensions --domain ux` returned verified image scaling, image optimization and asset-weight guidance. Preserve the whole game-focused approved PNG (no cropping), intrinsic width/height to reserve space, responsive width with automatic height, meaningful approved alt text, no new animation or shopping/social footer. Original GS corner identity is part of the actual approved image bytes, not redrawn by the renderer. No fixed aspect ratio is imposed. The maximum15MiB upload bound is a safety bound, not a recommended delivery weight; visual QA should favor compact final images without altering approved bytes.

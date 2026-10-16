@@ -25,3 +25,6 @@
 .editorial-index p{margin-bottom:0;color:#c0b5d0}
 @media(max-width:600px){.editorial{padding-top:1rem}.editorial-toc,.editorial-related,.editorial-index article{padding:1.125rem}.editorial h1{max-width:none}.editorial-section{margin:2.5rem 0}}
 @media(prefers-reduced-motion:reduce){.editorial{scroll-behavior:auto}.editorial *{animation:none;transition:none}}
+
+.editorial-banner{margin:2rem 0;border-radius:1rem;overflow:hidden;background:#20152f}
+.editorial-banner img{display:block;width:100%;height:auto;object-fit:contain}
