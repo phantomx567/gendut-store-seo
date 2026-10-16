@@ -69,9 +69,14 @@ def build(address, output):
     output.mkdir(parents=True, exist_ok=True)
     allowed = {'.html', '.css', '.js', '.png', '.webp', '.svg', '.ico', '.xml', '.txt'}
     for path in sorted(source.rglob('*')):
-        if not path.is_file() or path.suffix == '.html' or path.name in ('robots.txt', 'sitemap.xml'): continue
-        if path.is_symlink() or path.suffix not in allowed or any(part.startswith('.') for part in path.relative_to(source).parts): raise ValueError('Berkas bukan aset publik ditolak.')
-        target = output / path.relative_to(source); target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(path, target)
+        if not path.is_file() or path.name in ('robots.txt', 'sitemap.xml'): continue
+        relative = path.relative_to(source)
+        # Owner-provided Google challenges are root files, not rendered pages.
+        google_file = path.suffix == '.html' and len(relative.parts) == 1 and re.fullmatch(r'google[A-Za-z0-9_-]{4,128}\.html', path.name)
+        if path.suffix == '.html' and not google_file: continue
+        if path.is_symlink() or path.suffix not in allowed or any(part.startswith('.') for part in relative.parts): raise ValueError('Berkas bukan aset publik ditolak.')
+        if google_file and path.read_bytes() != ('google-site-verification: '+path.name).encode('utf-8'): raise ValueError('Isi file verifikasi Google harus tepat sesuai nama file.')
+        target = output / relative; target.parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(path, target)
     module_spec=importlib.util.spec_from_file_location('render_pages',ROOT/'scripts/render-pages.py')
     renderer=importlib.util.module_from_spec(module_spec); module_spec.loader.exec_module(renderer)
     rendered=renderer.render_pages(site)

@@ -111,13 +111,14 @@ class StaticBuild(unittest.TestCase):
   self.assertEqual(hashlib.sha256(saved['canonical_public_document_json'].encode()).hexdigest(),export['public_content_hash'])
 
  def test_google_verification_default_empty_keeps_all_eight_html_bytes(self):
-  first,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
+  first,manifest=self.run_build(origin='https://gendut-store-panduan.onrender.com')
   for value in [None,{}, {'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':''}]:
    (self.root/'content/google-verification.json').write_text(json.dumps(value))
    out,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
-   for html in first.rglob('*.html'):
-    self.assertEqual(html.read_bytes(),(out/html.relative_to(first)).read_bytes())
-    self.assertNotIn(b'google-site-verification',html.read_bytes())
+   for page in manifest['pages']:
+    local=page['path'].lstrip('/')+'index.html';html=first/local
+    self.assertEqual(html.read_bytes(),(out/local).read_bytes())
+    self.assertNotIn(b'<meta name="google-site-verification"',html.read_bytes())
  def test_google_private_export_imports_only_public_meta_and_preserves_other_pages(self):
   spec=importlib.util.spec_from_file_location('google_verification',self.root/'scripts/google-verification.py');adapter=importlib.util.module_from_spec(spec);spec.loader.exec_module(adapter);adapter.ROOT=self.root
   before,_=self.run_build(origin='https://gendut-store-panduan.onrender.com')
@@ -132,5 +133,25 @@ class StaticBuild(unittest.TestCase):
   for config in [{'property_id':'https://other.invalid/','method':'html_meta','value':'isolated-only-value'},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':'x\"/><script>bad</script>'},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_meta','value':'isolated-only-value','provided_by_google':True},{'property_id':'https://gendut-store-panduan.onrender.com/','method':'html_file','value':'isolated-only-value'}]:
    (self.root/'content/google-verification.json').write_text(json.dumps(config))
    with self.assertRaises(ValueError):self.run_build()
+
+ def test_owner_google_file_survives_clean_rebuild_without_becoming_a_page(self):
+  name='google3a3d604f96efc674.html';original=(self.root/'dist'/name).read_bytes()
+  self.assertEqual(len(original),53);self.assertEqual(hashlib.sha256(original).hexdigest(),'e610ee48c6ca8e8efe11f199a6acf0f03dd4760afe92969b8469cec2615dd617')
+  out,manifest=self.run_build();self.assertEqual((out/name).read_bytes(),original);self.assertEqual(len(manifest['pages']),8)
+  self.assertNotIn('/'+name,[p['path'] for p in manifest['pages']]);self.assertNotIn(name,(out/'sitemap.xml').read_text());self.assertEqual(len(ET.parse(out/'sitemap.xml').getroot()),8)
+  html_before={p['path']:(out/(p['path'].lstrip('/')+'index.html')).read_bytes() for p in manifest['pages']}
+  shutil.rmtree(out);build_module.build('https://preview.example.org',out)
+  self.assertEqual((out/name).read_bytes(),original)
+  for route,body in html_before.items():self.assertEqual((out/(route.lstrip('/')+'index.html')).read_bytes(),body)
+  self.assertFalse((out/('1-'+name)).exists());self.assertFalse((out/'game/not-a-page/index.html').exists())
+ def test_google_file_copy_is_root_only_and_refuses_wrong_body_or_symlink(self):
+  name='google3a3d604f96efc674.html';source=self.root/'dist'/name
+  (self.root/'dist/other.html').write_text('<html>not a public challenge</html>')
+  nested=self.root/'dist/nested'/name;nested.parent.mkdir();nested.write_bytes(source.read_bytes())
+  out,_=self.run_build();self.assertFalse((out/'other.html').exists());self.assertFalse((out/'nested'/name).exists())
+  original=source.read_bytes();source.write_text('<html>wrong challenge body</html>')
+  with self.assertRaisesRegex(ValueError,'verifikasi Google'):self.run_build()
+  source.unlink();target=self.root/'external-file.html';target.write_bytes(original);source.symlink_to(target)
+  with self.assertRaisesRegex(ValueError,'aset publik'):self.run_build()
 
 if __name__=='__main__':unittest.main(verbosity=2)
