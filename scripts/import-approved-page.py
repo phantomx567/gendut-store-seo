@@ -21,6 +21,8 @@ def import_export(file):
     entry={'path':route,'title':doc['title'],'description':doc['description'],'h1':doc['title'],'target_keywords':doc['target_keywords'],'approval_export':str(destination.relative_to(ROOT)),
       'twitterCard':'summary','openGraph':{'image':origin+'/assets/gendut-store-social.png','image_width':1080,'image_height':1080,'image_alt':'Logo Gendut Store'},
       'jsonLd':{'@context':'https://schema.org','@graph':[{'@type':'WebPage','@id':origin+route+'#webpage','url':origin+route,'name':doc['title'],'description':doc['description'],'inLanguage':'id'}]}}
+    if doc.get('page_type')=='article':
+        entry['page_type']='article';entry['jsonLd']=module.articles.metadata(doc,origin)
     site['pages']=[entry if p['path']==route else p for p in site['pages']]
     if not any(p['path']==route for p in site['pages']):site['pages'].append(entry)
     (ROOT/'content/site.json').write_text(json.dumps(site,ensure_ascii=False,indent=2));return proof

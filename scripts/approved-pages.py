@@ -1,4 +1,5 @@
 """Validate staff-private exports; expose only exact public-content snapshots."""
+import importlib.util
 import hashlib
 import json
 from pathlib import Path
@@ -6,19 +7,23 @@ import re
 ORIGIN='https://gendut-store-panduan.onrender.com'
 SOURCE={'origin':ORIGIN,'repository':'phantomx567/gendut-store-seo','branch':'main'}
 PUBLIC_FIELDS={'path','title','description','target_keywords','content'}
+article_spec=importlib.util.spec_from_file_location('article_pages',Path(__file__).with_name('article-pages.py'));articles=importlib.util.module_from_spec(article_spec);article_spec.loader.exec_module(articles)
 SNAPSHOT_FIELDS={'schema_version','page_id','revision','canonical_public_document_json','public_content_hash','source'}
 
 def parse_snapshot(value, expected_path=None):
     raw=value.get('canonical_public_document_json')
     if not isinstance(raw,str): raise ValueError('Canonical public document diperlukan.')
     digest=hashlib.sha256(raw.encode('utf-8')).hexdigest();document=json.loads(raw)
-    if set(document)!=PUBLIC_FIELDS or value.get('schema_version')!=1 or digest!=value.get('public_content_hash'): raise ValueError('Public content/hash tidak sesuai whitelist.')
+    article=document.get('page_type')=='article'
+    fields=articles.ARTICLE_FIELDS if article else PUBLIC_FIELDS
+    if set(document)!=fields or value.get('schema_version')!=1 or digest!=value.get('public_content_hash'): raise ValueError('Public content/hash tidak sesuai whitelist.')
     revision=value.get('revision');page_id=value.get('page_id')
     if type(revision)!=int or revision<1 or not isinstance(page_id,str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,160}',page_id): raise ValueError('Identitas snapshot tidak valid.')
     if value.get('source')!=SOURCE: raise ValueError('Sumber snapshot tidak valid.')
     route=document.get('path','')
-    if not re.fullmatch(r'(?:/|/game/[a-z0-9]+(?:-[a-z0-9]+)*/)',route) or (expected_path and route!=expected_path): raise ValueError('Path snapshot tidak sesuai.')
-    for key,minimum,maximum in [('title',3,200),('description',10,500),('content',20,60000)]:
+    if not re.fullmatch(articles.ARTICLE_PATH if article else r'(?:/|/game/[a-z0-9]+(?:-[a-z0-9]+)*/)',route) or (expected_path and route!=expected_path): raise ValueError('Path snapshot tidak sesuai.')
+    if article: articles.validate_article(document)
+    for key,minimum,maximum in [('title',3,200),('description',10,500)]+([] if article else [('content',20,60000)]):
         text=document.get(key)
         if not isinstance(text,str) or not minimum<=len(text)<=maximum: raise ValueError('Isi publik tidak valid: '+key)
     words=document.get('target_keywords')
@@ -32,7 +37,7 @@ def public_snapshot(path, expected_path=None):
 
 def approved_export(path, expected_path=None):
     export=json.loads(Path(path).read_text());document,proof=parse_snapshot(export,expected_path)
-    if {k:export.get('document',{}).get(k) for k in PUBLIC_FIELDS}!=document: raise ValueError('Dokumen privat dan proyeksi publik berbeda.')
+    if {k:export.get('document',{}).get(k) for k in document}!=document: raise ValueError('Dokumen privat dan proyeksi publik berbeda.')
     for key in ['approval','qa']:
         receipt=export.get(key,{})
         if receipt.get('revision')!=proof['approval_revision'] or receipt.get('content_hash')!=proof['approved_snapshot_hash']: raise ValueError('QA/persetujuan berbeda snapshot publik.')

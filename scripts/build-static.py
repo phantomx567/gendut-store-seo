@@ -61,11 +61,23 @@ def build(address, output):
             if not export_path.resolve().is_relative_to((ROOT/'content/approved').resolve()) or export_path.is_symlink(): raise ValueError('Path export tidak valid.')
             document,proof=approvals.public_snapshot(export_path,page['path'])
             if any(page[key]!=document[key] for key in ['title','description','target_keywords']) or page['h1']!=document['title']: raise ValueError('Metadata tidak sesuai snapshot yang disetujui.')
+            if page.get('page_type') not in (None,document.get('page_type')): raise ValueError('Tipe halaman berbeda dari snapshot approved.')
             page['approved_document']=document;approval_proofs[page['path']]=proof
+            if document.get('page_type')=='article':
+                page['page_type']='article';page['jsonLd']=approvals.articles.metadata(document,site['origin'])
+        elif page.get('page_type')=='article' or page['path'].startswith('/artikel/'):
+            raise ValueError('Artikel memerlukan snapshot approved; draft tidak boleh dibangun.')
+    article_pages=[p for p in pages if p.get('page_type')=='article']
+    if article_pages:
+        derived=[approval_proofs[p['path']] for p in sorted(article_pages,key=lambda p:p['path'])]
+        hub={'path':'/artikel/','page_type':'article_index','title':'Artikel dan panduan bermain','description':'Penjelasan dan langkah praktis berdasarkan sumber yang dicantumkan pada setiap artikel Gendut Store.','h1':'Artikel dan panduan bermain','target_keywords':['artikel game'],'derived_from':derived,'openGraph':pages[0]['openGraph'],'jsonLd':{'@context':'https://schema.org','@type':'CollectionPage','name':'Artikel dan panduan bermain','url':site['origin']+'/artikel/'}}
+        pages.append(hub)
     paths = {p['path'] for p in pages}
     if not pages or len(paths) != len(pages) or '/' not in paths: raise ValueError('Halaman beranda dan path unik diperlukan.')
+    for page in article_pages:
+        if any(path not in paths for path in page['approved_document']['related_paths']): raise ValueError('Tautan halaman lokal artikel belum dibangun.')
     for path in paths:
-        if path != '/' and not re.fullmatch(r'/game/[a-z0-9]+(?:-[a-z0-9]+)*/', path): raise ValueError('Path halaman tidak valid.')
+        if path != '/' and not (path=='/artikel/' and article_pages) and not re.fullmatch(r'/(?:game|artikel)/[a-z0-9]+(?:-[a-z0-9]+)*/', path): raise ValueError('Path halaman tidak valid.')
     output.mkdir(parents=True, exist_ok=True)
     allowed = {'.html', '.css', '.js', '.png', '.webp', '.svg', '.ico', '.xml', '.txt'}
     for path in sorted(source.rglob('*')):
@@ -99,7 +111,7 @@ def build(address, output):
             '<meta property="og:image:width" content="'+str(og['image_width'])+'">',
             '<meta property="og:image:height" content="'+str(og['image_height'])+'">',
             '<meta property="og:image:alt" content="'+escape(og['image_alt'],quote=True)+'">',
-            '<script type="application/ld+json">'+json.dumps(graph,ensure_ascii=False).replace('</','<\\/')+'</script>'
+            '<script type="application/ld+json">'+json.dumps(graph,ensure_ascii=False).replace('<','\\u003c')+'</script>'
         ])
         if google_meta and address+'/'==google_meta['property_id'] and spec['path']=='/':
             metadata+='\n<meta name="google-site-verification" content="'+escape(google_meta['value'],quote=True)+'">'
@@ -113,12 +125,14 @@ def build(address, output):
         for link in page.links:
             parsed=urlsplit(link)
             if parsed.scheme or parsed.netloc:
+                if spec.get('page_type')=='article' and link in {s['url'] for s in spec['approved_document']['sources']}:
+                    approvals.articles.source_url(link);continue
                 if parsed.scheme!='https' or parsed.hostname!='gendutstore.com' or parsed.username or parsed.password or parsed.port or parsed.query or parsed.fragment: raise ValueError('Tautan produk pusat tidak valid: '+link)
                 if parsed.path not in ['/', '/games', '/terms'] and not re.fullmatch(r'/id/[A-Za-z0-9_-]+',parsed.path): raise ValueError('Path produk tidak valid: '+link)
             elif parsed.path and parsed.path not in paths: raise ValueError('Tautan halaman lokal tidak valid: '+link)
             if parsed.fragment and (not parsed.path or parsed.path==spec['path']) and parsed.fragment not in page.ids: raise ValueError('Jangkar tidak ditemukan: '+link)
         target=output/local; target.parent.mkdir(parents=True,exist_ok=True); target.write_text(html)
-        records.append({'slug':spec['path'],'path':spec['path'],'title':title,'description':description,'target_keywords':spec['target_keywords'],'canonical':canonical,'source_path':'content/site.json','content_sha256':hashlib.sha256(target.read_bytes()).hexdigest(),**approval_proofs.get(spec['path'],{})})
+        records.append({'slug':spec['path'],'path':spec['path'],'title':title,'description':description,'target_keywords':spec['target_keywords'],'canonical':canonical,'source_path':'content/site.json','content_sha256':hashlib.sha256(target.read_bytes()).hexdigest(),**approval_proofs.get(spec['path'],{}),**({'page_type':spec['page_type']} if spec.get('page_type') else {}),**({'derived_from':spec['derived_from']} if spec.get('derived_from') else {})})
     (output/'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: '+address+'/sitemap.xml\n')
     (output/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+escape(address+p['path'])+'</loc></url>' for p in pages)+'</urlset>\n')
     commit=os.environ.get('RENDER_GIT_COMMIT') or None

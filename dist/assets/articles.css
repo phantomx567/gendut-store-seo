@@ -1,0 +1,27 @@
+/* Scoped editorial reading layout; the existing landing styles stay unchanged. */
+.editorial{max-width:74ch;padding-top:2rem;padding-bottom:4rem;overflow-wrap:anywhere}
+.editorial article,.editorial section,.editorial-index>*{min-width:0}
+.editorial h1{font-size:clamp(2rem,4vw,3.5rem);line-height:1.16;letter-spacing:-.025em;margin:1rem 0 1.5rem;max-width:24ch}
+.editorial h2{font-size:clamp(1.35rem,2vw,1.9rem);line-height:1.3;margin:0 0 1rem;letter-spacing:-.015em}
+.editorial p,.editorial li{font-size:1rem;line-height:1.8}
+.editorial p{margin:0 0 1.25rem}
+.editorial-lead{font-size:1.125rem!important;color:var(--muted,#c0b5d0)}
+.editorial a{color:#c4afff;text-decoration:underline;text-underline-offset:.2em}
+.editorial a:hover{color:#fff}
+.editorial a:focus-visible{outline:3px solid #64e4d4;outline-offset:4px;border-radius:2px}
+.editorial-breadcrumb{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:2rem}
+.editorial-breadcrumb a,.editorial-back{display:inline-flex;align-items:center;min-height:44px}
+.editorial-toc,.editorial-related{padding:1.5rem;background:#20152f;border:1px solid #443451;border-radius:1rem;margin:2rem 0}
+.editorial-toc a{display:inline-block;padding:.4rem 0}
+.editorial ol,.editorial ul{padding-left:1.5rem}
+.editorial li+li{margin-top:.65rem}
+.editorial-section{margin:3rem 0;scroll-margin-top:2rem}
+.editorial-references,.editorial-sources li p{font-size:.875rem!important;color:#c0b5d0}
+.editorial-sources{border-top:1px solid #443451;padding-top:2rem}
+.editorial-sources li{scroll-margin-top:2rem}
+.editorial-sources li p{margin-top:.4rem}
+.editorial-index{display:grid;gap:1.25rem;margin:2rem 0}
+.editorial-index article{background:#20152f;border:1px solid #443451;border-radius:1rem;padding:1.5rem}
+.editorial-index p{margin-bottom:0;color:#c0b5d0}
+@media(max-width:600px){.editorial{padding-top:1rem}.editorial-toc,.editorial-related,.editorial-index article{padding:1.125rem}.editorial h1{max-width:none}.editorial-section{margin:2.5rem 0}}
+@media(prefers-reduced-motion:reduce){.editorial{scroll-behavior:auto}.editorial *{animation:none;transition:none}}
