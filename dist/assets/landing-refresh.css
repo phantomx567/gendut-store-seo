@@ -74,3 +74,19 @@
  .landing-game .product-facts dd{font-size:1rem;line-height:1.5;margin-top:8px}
 }
 @media(prefers-reduced-motion:reduce){.landing-page *{animation:none!important;transition:none!important}}
+
+/* Wide-screen HOME: fluid canvas, bounded reading and discovery controls. */
+@media(min-width:1024px){
+ .landing-home{--home-gutter:clamp(24px,3.333333vw,64px)}
+ .landing-home .wrap{width:calc(100% - var(--home-gutter)*2);max-width:none}
+ .landing-home .landing-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,4vw,80px);position:relative;isolation:isolate}
+ .landing-home .landing-hero:before{content:"";position:absolute;inset:0 calc(-1*var(--home-gutter));z-index:-1;pointer-events:none;background-image:linear-gradient(90deg,#110b1ce8 0%,#110b1cb8 40%,#110b1c30 100%),linear-gradient(0deg,#110b1c 0%,#110b1c00 35%),url('/assets/gendut-gaming-world.webp');background-size:cover;background-position:center right;background-repeat:no-repeat}
+ .landing-home .hero-copy{max-width:660px}
+ .landing-home .hero-discovery{max-width:660px}
+ .landing-home .landing-hero .lead{max-width:49ch}
+ .landing-home .game-copy p{max-width:34ch}
+ .landing-home .how .steps,.landing-home .faq-list{width:100%;max-width:70ch;justify-self:end}
+ .landing-home .section-intro,.landing-home .steps p,.landing-home .faq-list details p{max-width:65ch}
+ .landing-home .closing p:not(.eyebrow){max-width:65ch;margin-inline:auto}
+}
+@media(min-width:1600px){.landing-home .game-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:20px}}
