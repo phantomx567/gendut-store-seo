@@ -25,6 +25,8 @@
     filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === category)));
   };
   tools.hidden = false;
+  const filterGroup = document.getElementById('game-filters');
+  if (filterGroup) filterGroup.hidden = false;
   count.hidden = false;
   search.addEventListener('input', update);
   filters.forEach(button => button.addEventListener('click', () => { category = button.dataset.filter; update(); }));

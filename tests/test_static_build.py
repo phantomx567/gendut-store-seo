@@ -44,6 +44,14 @@ class StaticBuild(unittest.TestCase):
   for asset in manifest['assets']:
    self.assertEqual(hashlib.sha256((out/asset['path'].lstrip('/')).read_bytes()).hexdigest(),asset['sha256'])
   self.assertFalse((out/'game/not-a-page/index.html').exists(),'No invented route or homepage fallback')
+ def test_home_discovery_has_single_search_and_real_guide_shortcuts(self):
+  out,manifest=self.run_build();html=(out/'index.html').read_text()
+  self.assertEqual(html.count('id="game-search"'),1);self.assertEqual(html.count('id="game-grid"'),1);self.assertEqual(html.count('id="game-filters"'),1)
+  self.assertLess(html.index('id="game-search"'),html.index('id="pilihan-game"'))
+  self.assertIn('aria-label="Pintasan panduan game"',html);self.assertIn('/assets/landing-refresh.css',html)
+  for record in manifest['pages']:
+   self.assertTrue(record['path']=='/' or record['path'].startswith('/game/'))
+   self.assertIn('/assets/landing-refresh.css',(out/(record['path'].lstrip('/')+'index.html')).read_text())
  def test_ninth_page_compiles_from_document_without_prewritten_html(self):
   page=copy.deepcopy(self.site['pages'][1]);old=page['path'];page['path']='/game/build-fixture/';page['title']='Isolated new page';page['description']='Unique isolated fixture description';page['h1']='New useful isolated heading';page['copy']['h1']=page['h1'];page['copy']['game']='Fixture game';page['copy']['intro']='Actual content added to this isolated document.';page['jsonLd']=json.loads(json.dumps(page['jsonLd']).replace(old,page['path']));self.site['pages'].append(page)
   out,manifest=self.run_build();self.assertEqual(len(manifest['pages']),9);self.assertEqual(len(ET.parse(out/'sitemap.xml').getroot()),9)

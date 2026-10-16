@@ -75,6 +75,7 @@ class ArticleBuild(unittest.TestCase):
         html=(out/'artikel/isolated-help/index.html').read_text();hub=(out/'artikel/index.html').read_text()
         self.assertIn('&lt;script&gt;',html);self.assertNotIn('<script>fixture',html)
         self.assertIn(self.doc['sources'][0]['url'].replace('&','&amp;'),html);self.assertIn('"@type": "Article"',html);self.assertIn('"@type": "BreadcrumbList"',html)
+        self.assertNotIn('landing-refresh.css',html);self.assertNotIn('game-shortcuts',html);self.assertNotIn('id="game-search"',html)
         self.assertNotIn('datePublished',html);self.assertNotIn('"author"',html);self.assertNotIn('https://gendutstore.com/games',html)
         self.assertIn(self.doc['title'],hub);self.assertEqual(len(manifest['pages']),10)
         article=next(p for p in manifest['pages'] if p['path']==self.doc['path']);index=next(p for p in manifest['pages'] if p['path']=='/artikel/')

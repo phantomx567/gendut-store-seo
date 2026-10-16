@@ -10,6 +10,10 @@ def footer():
 def faq(items):return '<div class="faq-list">'+''.join('<details><summary>'+e(p['question'])+'<span aria-hidden="true">+</span></summary><p>'+e(p['answer'])+'</p></details>' for p in items)+'</div>'
 def head(p):
  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+e(p['title'])+'</title><meta name="description" content="'+e(p['description'])+'"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#110b1c"><meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:site_name" content="Gendut Store — Pilihan Game &amp; Voucher"><meta property="og:title" content="'+e(p['title'])+'"><meta property="og:description" content="'+e(p['description'])+'"><meta name="twitter:card" content="summary"><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/assets/theme-dark.css"><script src="/script.js" defer></script></head><body>'
+def discovery_hero(p,search):
+ h=p['hero'];primary=h['primary_cta'];secondary=h['secondary_cta'];labels={0:'Mobile Legends',1:'Free Fire',3:'VALORANT'}
+ shortcuts=''.join('<a href="'+e(p['cards'][i]['path'])+'"><img src="'+e(p['cards'][i]['image']['path'])+'" width="44" height="44" alt="" decoding="async"><span>'+e(label)+'</span></a>' for i,label in labels.items())
+ return '<section class="hero wrap landing-hero"><div class="hero-copy"><p class="eyebrow">Gendut Store · Game &amp; voucher</p><h1>'+e(p['h1']).replace('Lanjut mabar.','<span>Lanjut mabar.</span>')+'</h1><p class="lead">'+e(h['lede'])+'</p><div class="hero-discovery">'+search+'<nav class="game-shortcuts" aria-label="Pintasan panduan game">'+shortcuts+'</nav></div><div class="actions"><a class="button" href="'+e(primary['href'])+'">'+e(primary['label'])+' <span aria-hidden="true">↗</span></a><a class="text-link" href="'+e(secondary['href'])+'">'+e(secondary['label'])+' <span aria-hidden="true">↓</span></a></div></div><div class="hero-art"><span class="hero-stage" aria-hidden="true"></span><span class="hero-orbit" aria-hidden="true"></span><img src="/assets/gendut-mascot-controller.webp" width="1000" height="1000" alt="Maskot Gendut Store duduk memegang controller dengan konsol putih di sampingnya" fetchpriority="high"></div></section>'
 def render_pages(data):
  homefaq=data['pages'][0].get('faq',[])
  rendered={}
@@ -38,6 +42,11 @@ def render_pages(data):
    content=hero_html+content[hero_end:]
    content=content.replace('<h1>Pilihan top up game dan voucher <span>Gendut Store</span></h1>','<h1>'+e(p['h1']).replace('Lanjut mabar.','<span>Lanjut mabar.</span>')+'</h1>')
    content=re.sub(r'<section class="benefits wrap".*?</section>','',content,flags=re.S)
+  if p['path']=='/' and not p.get('approved_document'):
+   tools=re.search(r'<div class="search-tools" id="game-tools" hidden>.*?</div></div>',content,re.S).group(0)
+   filters=re.search(r'<div class="filters".*?</div>',tools,re.S).group(0)
+   content=content.replace(tools,filters.replace('class="filters"','class="filters" id="game-filters" hidden'))
+   content=re.sub(r'<section class="hero wrap">.*?</section>',lambda _:discovery_hero(p,tools.replace(filters,'')),content,count=1,flags=re.S)
   for symbol,shape in [('↗','M4 20 20 4M4 4h16v16'),('↓','M12 4v16M5 13l7 7 7-7')]:
    content=content.replace(symbol,'<svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="'+shape+'"/></svg>')
   local=p['path'].lstrip('/')+'index.html'
@@ -49,6 +58,7 @@ def render_pages(data):
    page_header='<a class="skip-link" href="#konten">Langsung ke isi</a><header class="site-header wrap"><a class="brand" href="/" aria-label="Gendut Store, beranda"><img src="/assets/gendut-store-logo.webp" width="800" height="267" alt="Gendut Store"></a><nav aria-label="Navigasi utama"><a href="/artikel/">Artikel</a><a href="/#pilihan-game">Pilihan game</a></nav></header>'
    page_footer='<footer class="site-footer wrap"><p>Gendut Store</p><nav aria-label="Navigasi footer"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></footer>'
   else:
+   page_head=page_head.replace('</head>','<link rel="stylesheet" href="/assets/landing-refresh.css"></head>').replace('<body>','<body class="landing-page '+('landing-home' if p['path']=='/' else 'landing-game')+'">')
    page_header=header(p['path']=='/');page_footer=footer()
    if any(q.get('page_type')=='article' for q in data['pages']):page_header=page_header.replace('</nav>','<a href="/artikel/">Artikel</a></nav>')
   rendered[local]=page_head+page_header+content+page_footer+'</body></html>'
