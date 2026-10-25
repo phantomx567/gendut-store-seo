@@ -67,6 +67,8 @@ def build(address, output):
                 page['page_type']='article';page['jsonLd']=approvals.articles.metadata(document,site['origin'])
         elif page.get('page_type')=='article' or page['path'].startswith('/artikel/'):
             raise ValueError('Artikel memerlukan snapshot approved; draft tidak boleh dibangun.')
+    selection_spec=importlib.util.spec_from_file_location('release_selection',ROOT/'scripts/release-selection.py');selection=importlib.util.module_from_spec(selection_spec);selection_spec.loader.exec_module(selection)
+    withdrawn=selection.load(ROOT);pages=selection.selected(pages,approval_proofs,withdrawn);site['pages']=pages;site['withdrawn_paths']=[r['path'] for r in withdrawn]
     article_pages=[p for p in pages if p.get('page_type')=='article']
     banner_paths=set()
     for page in article_pages:
@@ -82,7 +84,7 @@ def build(address, output):
     paths = {p['path'] for p in pages}
     if not pages or len(paths) != len(pages) or '/' not in paths: raise ValueError('Halaman beranda dan path unik diperlukan.')
     for page in article_pages:
-        if any(path not in paths for path in page['approved_document']['related_paths']): raise ValueError('Tautan halaman lokal artikel belum dibangun.')
+        if any(path not in paths and path not in site['withdrawn_paths'] for path in page['approved_document']['related_paths']): raise ValueError('Tautan halaman lokal artikel belum dibangun.')
     for path in paths:
         if path != '/' and not (path=='/artikel/' and article_pages) and not re.fullmatch(r'/(?:game|artikel)/[a-z0-9]+(?:-[a-z0-9]+)*/', path): raise ValueError('Path halaman tidak valid.')
     output.mkdir(parents=True, exist_ok=True)
@@ -103,7 +105,7 @@ def build(address, output):
     records=[]
     for spec in pages:
         local = spec['path'].lstrip('/') + 'index.html'
-        html = rendered[local]
+        html = selection.suppress_links(rendered[local],set(site['withdrawn_paths']),address)
         title = unescape(re.search(r'<title>(.*?)</title>', html, re.S).group(1))
         description = unescape(re.search(r'<meta name="description" content="([^"]+)"', html).group(1))
         if title != spec['title'] or description != spec['description']: raise ValueError('Metadata sumber berbeda dari kontrak halaman: '+local)

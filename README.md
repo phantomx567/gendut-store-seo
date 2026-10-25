@@ -27,3 +27,11 @@ Sumber teknis:
 - https://render.com/docs/static-sites
 - https://render.com/docs/environment-variables
 - https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits
+
+## Adapter penarikan halaman
+
+Instruksi penarikan berasal dari `withdrawal_export` privat milik owner, bukan penolakan tugas umum. Simpan ekspor privat di luar repository, lalu jalankan `python3 scripts/withdraw-approved-page.py --export /private/withdrawal.json`. Untuk LP legacy, sertakan `--manifest /private/current-site-manifest.json --render-output /private/current-build`; adapter memeriksa commit/path/SHA dan membangun ulang source saat ini untuk menolak bukti lama. Untuk revisi approved baru yang sudah antre sementara versi sebelumnya masih live, sertakan manifest target publik agar kedua pasangan versi dibedakan secara tepat.
+
+Adapter menyimpan hanya seleksi publik minimal; alasan, UUID owner, history dan hash draf yang belum live tidak masuk seleksi. Snapshot approved tidak ditimpa atau dihapus. Build bersih meniadakan route, banner yatim, daftar/hub/sitemap dan href terkait sambil mempertahankan label/prosa. Penarikan beranda ditolak. Batas `revoked_through_revision` membatalkan seluruh revisi sampai keputusan penarikan; impor ulang approval lama tidak mengaktifkannya. Hanya ekspor approved yang lebih baru dapat membuka rilis lagi. Verifikasi404/410 independen tetap diperlukan setelah deployment; localbuild tidak berarti halaman sudah ditarik.
+
+Tanpa file seleksi, hasil sebelas halaman existing tidak berubah. Tidak ada instruksi penarikan nyata yang disertakan dalam perubahan dukungan ini. Jalankan `python3 -m unittest discover -s tests -v` untuk regresi dan fixture sintetis; jangan memakai halaman live sebagai percobaan.

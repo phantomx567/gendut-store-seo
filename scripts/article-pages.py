@@ -89,7 +89,7 @@ def render_article(doc,pages):
     parts.append('</ol></section>')
     if doc['related_paths']:
         titles={p['path']:p['title'] for p in pages}
-        parts.append('<aside class="editorial-related"><h2>Panduan terkait</h2><ul>'+''.join('<li><a href="'+e(path)+'">'+e(titles[path])+'</a></li>' for path in doc['related_paths'])+'</ul></aside>')
+        parts.append('<aside class="editorial-related"><h2>Panduan terkait</h2><ul>'+''.join('<li><a href="'+e(path)+'">'+e(titles[path])+'</a></li>' for path in doc['related_paths'] if path in titles)+'</ul></aside>')
     return ''.join(parts)+'</article><p><a class="editorial-back" href="/artikel/">Kembali ke semua artikel</a></p></main>'
 
 def render_index(pages):

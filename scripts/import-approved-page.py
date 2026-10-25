@@ -13,6 +13,8 @@ spec=importlib.util.spec_from_file_location('approved_pages',ROOT/'scripts/appro
 
 def import_export(file,banner_file=None):
     doc,proof,snapshot=module.approved_export(file);origin=module.ORIGIN;route=doc['path']
+    selection_spec=importlib.util.spec_from_file_location('release_selection',ROOT/'scripts/release-selection.py');selection=importlib.util.module_from_spec(selection_spec);selection_spec.loader.exec_module(selection)
+    next_selection=selection.after_approved_import(ROOT,route,proof)
     banner=doc.get('banner');banner_data=None
     if banner:
         if banner_file is None:raise ValueError('Banner approved memerlukan --banner-file lokal asli.')
@@ -36,7 +38,7 @@ def import_export(file,banner_file=None):
         entry['page_type']='article';entry['jsonLd']=module.articles.metadata(doc,origin)
     site['pages']=[entry if p['path']==route else p for p in site['pages']]
     if not any(p['path']==route for p in site['pages']):site['pages'].append(entry)
-    (ROOT/'content/site.json').write_text(json.dumps(site,ensure_ascii=False,indent=2));return proof
+    (ROOT/'content/site.json').write_text(json.dumps(site,ensure_ascii=False,indent=2));selection.save(ROOT,next_selection);return proof
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--export',dest='file',type=Path,required=True);parser.add_argument('--banner-file',type=Path);args=parser.parse_args()
     print(json.dumps(import_export(args.file,args.banner_file)))
