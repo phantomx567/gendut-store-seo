@@ -21,7 +21,7 @@ def render_pages(data):
   if p.get('page_type')=='article':
    content=articles.render_article(p['approved_document'],data['pages'])
   elif p.get('page_type')=='article_index':
-   content=articles.render_index([q for q in data['pages'] if q.get('page_type')=='article'])
+   content=articles.render_index([q for q in data['pages'] if q.get('page_type')=='article'],data['pages'])
   elif p.get('approved_document'):
    doc=p['approved_document'];paragraphs=''.join('<p>'+e(t).replace('\n','<br>')+'</p>' for t in doc['content'].split('\n\n') if t.strip())
    content='<main id="konten" class="wrap section"><p class="eyebrow">Gendut Store · Panduan game</p><h1>'+e(doc['title'])+'</h1><p class="lead">'+e(doc['description'])+'</p><article class="article-section approved-copy">'+paragraphs+'</article><a class="button" href="https://gendutstore.com/games">Buka katalog Gendut Store ↗</a><p class="catalog-note"><a href="/">Kembali ke beranda</a></p></main>'

@@ -383,7 +383,8 @@
         "sha256": "bc105fa21ca8bc59a5e8dec2dc9702f83c22ec0140885bd7b6a92beda6bf32d6",
         "width": 358,
         "height": 358,
-        "bytes": 24014
+        "bytes": 24014,
+        "cover_name": "Mobile Legends"
       }
     },
     {
@@ -527,7 +528,8 @@
         "sha256": "7b59c13a47a3268e3a0ce011843e126d804f905cd79c59ef03319ada6a91b491",
         "width": 480,
         "height": 480,
-        "bytes": 47030
+        "bytes": 47030,
+        "cover_name": "Free Fire"
       }
     },
     {

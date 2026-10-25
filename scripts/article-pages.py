@@ -92,6 +92,22 @@ def render_article(doc,pages):
         parts.append('<aside class="editorial-related"><h2>Panduan terkait</h2><ul>'+''.join('<li><a href="'+e(path)+'">'+e(titles[path])+'</a></li>' for path in doc['related_paths'] if path in titles)+'</ul></aside>')
     return ''.join(parts)+'</article><p><a class="editorial-back" href="/artikel/">Kembali ke semua artikel</a></p></main>'
 
-def render_index(pages):
+def game_cover(page,pages):
+    """Derived game artwork only; editorial illustrations remain in the article."""
     e=lambda value:escape(str(value),quote=True)
-    return '<main id="konten" class="editorial wrap"><p class="eyebrow">Gendut Store</p><h1>Artikel dan panduan bermain</h1><p class="editorial-lead">Baca penjelasan dan langkah praktis berdasarkan sumber yang dicantumkan pada setiap artikel.</p><div class="editorial-index">'+''.join('<article><h2><a href="'+e(p['path'])+'">'+e(p['title'])+'</a></h2><p>'+e(p['description'])+'</p></article>' for p in sorted(pages,key=lambda p:p['path']))+'</div></main>'
+    related=page.get('approved_document',{}).get('related_paths',[])
+    for path in related:
+        game=next((p for p in pages if p.get('path')==path and path.startswith('/game/')),None)
+        if not game:continue
+        image=game.get('image');copy=game.get('copy')
+        if not isinstance(image,dict) or not isinstance(copy,dict):continue
+        name=image.get('cover_name',copy.get('game'))
+        asset=image.get('path','')
+        if not isinstance(name,str) or not name.strip() or not isinstance(asset,str) or not re.fullmatch(r'/assets/[A-Za-z0-9_-]+\.webp',asset):continue
+        if any(type(image.get(k)) is not int or not 1<=image[k]<=8192 for k in ('width','height')):continue
+        return '<div class="editorial-cover" aria-hidden="true"><div class="editorial-cover-copy"><span>Artikel game</span><strong>'+e(name)+'</strong></div><img src="'+e(asset)+'" alt="" width="'+str(image['width'])+'" height="'+str(image['height'])+'" decoding="async"></div>'
+    return ''
+
+def render_index(pages,all_pages=None):
+    e=lambda value:escape(str(value),quote=True)
+    return '<main id="konten" class="editorial wrap"><p class="eyebrow">Gendut Store</p><h1>Artikel dan panduan bermain</h1><p class="editorial-lead">Baca penjelasan dan langkah praktis berdasarkan sumber yang dicantumkan pada setiap artikel.</p><div class="editorial-index">'+''.join('<article><a class="editorial-card" href="'+e(p['path'])+'">'+game_cover(p,all_pages or [])+'<div class="editorial-card-copy"><h2>'+e(p['title'])+'</h2><p>'+e(p['description'])+'</p><span class="editorial-card-read">Baca artikel <span aria-hidden="true">→</span></span></div></a></article>' for p in sorted(pages,key=lambda p:p['path']))+'</div></main>'
