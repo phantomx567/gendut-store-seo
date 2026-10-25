@@ -28,6 +28,8 @@ def parse_snapshot(value, expected_path=None):
         if not isinstance(text,str) or not minimum<=len(text)<=maximum: raise ValueError('Isi publik tidak valid: '+key)
     words=document.get('target_keywords')
     if not isinstance(words,list) or len(words)>12 or any(not isinstance(k,str) or not 2<=len(k)<=100 for k in words): raise ValueError('Keyword publik tidak valid.')
+    if not article and route in {'/game/mobile-legends/','/game/free-fire/'}:
+        spec=importlib.util.spec_from_file_location('canonical_landing',Path(__file__).with_name('landing-pages.py'));lp=importlib.util.module_from_spec(spec);spec.loader.exec_module(lp);lp.canonical_document(raw,digest,expected_path)
     return document,{'page_id':page_id,'approval_revision':revision,'approved_snapshot_hash':digest}
 
 def public_snapshot(path, expected_path=None):

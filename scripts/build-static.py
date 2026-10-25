@@ -63,6 +63,9 @@ def build(address, output):
             if any(page[key]!=document[key] for key in ['title','description','target_keywords']) or page['h1']!=document['title']: raise ValueError('Metadata tidak sesuai snapshot yang disetujui.')
             if page.get('page_type') not in (None,document.get('page_type')): raise ValueError('Tipe halaman berbeda dari snapshot approved.')
             page['approved_document']=document;approval_proofs[page['path']]=proof
+            if document.get('page_type')!='article' and document['path'] in {'/game/mobile-legends/','/game/free-fire/'}:
+                first=document['content'].splitlines()[0];page['h1']=first[2:].strip() if first.startswith('# ') else document['title']
+                page['jsonLd']={'@context':'https://schema.org','@type':'WebPage','name':document['title'],'description':document['description'],'url':site['origin']+document['path']}
             if document.get('page_type')=='article':
                 page['page_type']='article';page['jsonLd']=approvals.articles.metadata(document,site['origin'])
         elif page.get('page_type')=='article' or page['path'].startswith('/artikel/'):
@@ -143,8 +146,10 @@ def build(address, output):
             if parsed.scheme or parsed.netloc:
                 if spec.get('page_type')=='article' and link in {s['url'] for s in spec['approved_document']['sources']}:
                     approvals.articles.source_url(link);continue
+                if spec.get('approved_document') and spec['path'] in {'/game/mobile-legends/','/game/free-fire/'} and link in {v['url'] for a in pages if a.get('page_type')=='article' for v in a.get('approved_document',{}).get('sources',[])}:
+                    approvals.articles.source_url(link);continue
                 if parsed.scheme!='https' or parsed.hostname!='gendutstore.com' or parsed.username or parsed.password or parsed.port or parsed.query or parsed.fragment: raise ValueError('Tautan produk pusat tidak valid: '+link)
-                if parsed.path not in ['/', '/games', '/terms'] and not re.fullmatch(r'/id/[A-Za-z0-9_-]+',parsed.path): raise ValueError('Path produk tidak valid: '+link)
+                if parsed.path not in ['/', '/games', '/terms','/transaction'] and not re.fullmatch(r'/id/[A-Za-z0-9_-]+',parsed.path): raise ValueError('Path produk tidak valid: '+link)
             elif parsed.path and parsed.path not in paths: raise ValueError('Tautan halaman lokal tidak valid: '+link)
             if parsed.fragment and (not parsed.path or parsed.path==spec['path']) and parsed.fragment not in page.ids: raise ValueError('Jangkar tidak ditemukan: '+link)
         target=output/local; target.parent.mkdir(parents=True,exist_ok=True); target.write_text(html)

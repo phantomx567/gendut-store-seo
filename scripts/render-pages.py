@@ -2,6 +2,7 @@ from pathlib import Path
 import json,html,re,importlib.util
 root=Path(__file__).resolve().parents[1]
 article_spec=importlib.util.spec_from_file_location('article_renderer',root/'scripts/article-pages.py');articles=importlib.util.module_from_spec(article_spec);article_spec.loader.exec_module(articles)
+landing_spec=importlib.util.spec_from_file_location('landing_renderer',root/'scripts/landing-pages.py');landings=importlib.util.module_from_spec(landing_spec);landing_spec.loader.exec_module(landings)
 e=lambda v:html.escape(str(v),quote=True)
 def header(home=False):
  return '<a class="skip-link" href="#konten">Langsung ke isi</a><header class="site-header wrap"><a class="brand" href="/" aria-label="Gendut Store, beranda"><img src="/assets/gendut-store-logo.webp" width="800" height="267" alt="Gendut Store"></a><nav aria-label="Navigasi utama"><a href="/#pilihan-game">Pilihan game</a><a href="/#cara-beli">Cara beli</a><a href="/#faq">FAQ</a></nav><a class="button small" href="https://gendutstore.com/games">Buka katalog <span aria-hidden="true">↗</span></a></header>'
@@ -32,6 +33,8 @@ def render_pages(data):
    content=articles.render_article(p['approved_document'],data['pages'],p.get('editorial_cover'))
   elif p.get('page_type')=='article_index':
    content=articles.render_index([q for q in data['pages'] if q.get('page_type')=='article'],data['pages'])
+  elif p.get('approved_document') and p['path'] in landings.ROUTES:
+   content=landings.render_game_document(p['approved_document'],p,data['pages'],data.get('withdrawn_paths',[]))
   elif p.get('approved_document'):
    doc=p['approved_document'];paragraphs=''.join('<p>'+e(t).replace('\n','<br>')+'</p>' for t in doc['content'].split('\n\n') if t.strip())
    content='<main id="konten" class="wrap section"><p class="eyebrow">Gendut Store · Panduan game</p><h1>'+e(doc['title'])+'</h1><p class="lead">'+e(doc['description'])+'</p><article class="article-section approved-copy">'+paragraphs+'</article><a class="button" href="https://gendutstore.com/games">Buka katalog Gendut Store ↗</a><p class="catalog-note"><a href="/">Kembali ke beranda</a></p></main>'
@@ -45,7 +48,7 @@ def render_pages(data):
    guides=related_guides(p['path'],data['pages'],set(data.get('withdrawn_paths',[])))
    if guides:
     marker='<section class="article-section"><h2>Langkah menuju produk pilihanmu</h2>'
-    content=content.replace(marker,guides+marker,1) if marker in content else content.replace('</main>',guides+'</main>',1)
+    content=content.replace(marker,guides+marker,1) if marker in content else content.replace('<!-- related-guides -->',guides,1) if '<!-- related-guides -->' in content else content.replace('</main>',guides+'</main>',1)
   if p['path']=='/' and not p.get('approved_document'):
    hero=p.get('hero',{})
    content=re.sub(r'(<p class="lead">).*?(</p>)',lambda m:m[1]+e(hero.get('lede',''))+m[2],content,count=1,flags=re.S)

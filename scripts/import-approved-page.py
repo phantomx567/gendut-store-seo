@@ -29,7 +29,13 @@ def import_export(file,banner_file=None):
     destination=ROOT/'content/approved'/f"{proof['page_id']}-r{proof['approval_revision']}.json"
     encoded=json.dumps(snapshot,ensure_ascii=False,indent=2,sort_keys=True)
     if destination.exists() and destination.read_text()!=encoded: raise ValueError('Snapshot revisi yang tersimpan tidak boleh ditimpa.')
-    site=json.loads((ROOT/'content/site.json').read_text());destination.parent.mkdir(parents=True,exist_ok=True)
+    site=json.loads((ROOT/'content/site.json').read_text());game_frame={}
+    if route in {'/game/mobile-legends/','/game/free-fire/'} and doc.get('page_type')!='article':
+        prior=next((p for p in site['pages'] if p['path']==route),{})
+        for key in ['image','copy']:
+            if key not in prior:raise ValueError('Known game frame missing: '+key)
+            game_frame[key]=prior[key]
+    destination.parent.mkdir(parents=True,exist_ok=True)
     if banner_data is not None:
         banner_destination.parent.mkdir(parents=True,exist_ok=True)
         if not banner_destination.exists():banner_destination.write_bytes(banner_data)
@@ -37,6 +43,7 @@ def import_export(file,banner_file=None):
     entry={'path':route,'title':doc['title'],'description':doc['description'],'h1':doc['title'],'target_keywords':doc['target_keywords'],'approval_export':str(destination.relative_to(ROOT)),
       'twitterCard':'summary','openGraph':{'image':origin+'/assets/gendut-store-social.png','image_width':1080,'image_height':1080,'image_alt':'Logo Gendut Store'},
       'jsonLd':{'@context':'https://schema.org','@graph':[{'@type':'WebPage','@id':origin+route+'#webpage','url':origin+route,'name':doc['title'],'description':doc['description'],'inLanguage':'id'}]}}
+    entry.update(game_frame)
     if doc.get('page_type')=='article':
         entry['page_type']='article';entry['jsonLd']=module.articles.metadata(doc,origin)
     site['pages']=[entry if p['path']==route else p for p in site['pages']]
