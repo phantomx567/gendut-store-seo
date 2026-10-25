@@ -22,6 +22,10 @@ class ArticleBuild(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         for name in ['content','scripts','dist']:shutil.copytree(REPO/name,self.root/name)
+        # These unit fixtures intentionally model the original eight LPs, independently of approved production articles.
+        fixture_site=json.loads((self.root/'content/site.json').read_text());fixture_site['pages']=[p for p in fixture_site['pages'] if p['path']=='/' or p['path'].startswith('/game/')]
+        (self.root/'content/site.json').write_text(json.dumps(fixture_site,ensure_ascii=False))
+        shutil.rmtree(self.root/'content/approved',ignore_errors=True);shutil.rmtree(self.root/'dist/assets/articles',ignore_errors=True)
         self.builder=load('article_builder',self.root/'scripts/build-static.py');self.builder.ROOT=self.root
         self.adapter=load('article_adapter',self.root/'scripts/import-approved-page.py');self.adapter.ROOT=self.root
         self.count=0

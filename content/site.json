@@ -1246,6 +1246,141 @@
         "height": 480,
         "bytes": 41328
       }
+    },
+    {
+      "path": "/artikel/cara-membaca-user-id-server-id-mobile-legends/",
+      "title": "Cara membaca User ID dan Server ID Mobile Legends sebelum top up",
+      "description": "Pisahkan User ID dan Server ID Mobile Legends lewat satu contoh angka, lalu cocokkan kedua isian dengan akun tujuan sebelum melanjutkan.",
+      "h1": "Cara membaca User ID dan Server ID Mobile Legends sebelum top up",
+      "target_keywords": [
+        "User ID dan Server ID Mobile Legends",
+        "cara mengisi Server ID MLBB"
+      ],
+      "approval_export": "content/approved/landing-e899729d-cf2c-4094-8c9b-5ce3a193c5ac-r1.json",
+      "twitterCard": "summary",
+      "openGraph": {
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "@id": "https://gendut-store-panduan.onrender.com/artikel/cara-membaca-user-id-server-id-mobile-legends/#article",
+            "url": "https://gendut-store-panduan.onrender.com/artikel/cara-membaca-user-id-server-id-mobile-legends/",
+            "mainEntityOfPage": "https://gendut-store-panduan.onrender.com/artikel/cara-membaca-user-id-server-id-mobile-legends/",
+            "headline": "Cara membaca User ID dan Server ID Mobile Legends sebelum top up",
+            "description": "Pisahkan User ID dan Server ID Mobile Legends lewat satu contoh angka, lalu cocokkan kedua isian dengan akun tujuan sebelum melanjutkan.",
+            "inLanguage": "id",
+            "citation": [
+              "https://gendutstore.com/id/MLBB"
+            ],
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://gendut-store-panduan.onrender.com/assets/articles/2df55ae223b7d26c593673367903d76fd0555665437d58ad073e7cb84fd22d89.png",
+              "width": 1536,
+              "height": 1024,
+              "caption": "Diagram contoh ilustrasi Mobile Legends: pasangan 123456789 (12345) dipisahkan menjadi User ID 123456789 dan Server ID 12345; logo Gendut Store di kanan atas."
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/artikel/cara-membaca-user-id-server-id-mobile-legends/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Artikel",
+                "item": "https://gendut-store-panduan.onrender.com/artikel/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Cara membaca User ID dan Server ID Mobile Legends sebelum top up",
+                "item": "https://gendut-store-panduan.onrender.com/artikel/cara-membaca-user-id-server-id-mobile-legends/"
+              }
+            ]
+          }
+        ]
+      },
+      "page_type": "article"
+    },
+    {
+      "path": "/artikel/cara-menemukan-player-id-free-fire/",
+      "title": "Cara menemukan Player ID Free Fire dari profil akunmu",
+      "description": "Temukan Player ID melalui profil Free Fire, bedakan nomor akun dari nama karakter, lalu cocokkan kembali sebelum mengisi formulir.",
+      "h1": "Cara menemukan Player ID Free Fire dari profil akunmu",
+      "target_keywords": [
+        "cara melihat Player ID Free Fire",
+        "ID Free Fire di profil"
+      ],
+      "approval_export": "content/approved/landing-29f0c88b-a4d7-4e65-a721-8c0faf04f135-r1.json",
+      "twitterCard": "summary",
+      "openGraph": {
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "@id": "https://gendut-store-panduan.onrender.com/artikel/cara-menemukan-player-id-free-fire/#article",
+            "url": "https://gendut-store-panduan.onrender.com/artikel/cara-menemukan-player-id-free-fire/",
+            "mainEntityOfPage": "https://gendut-store-panduan.onrender.com/artikel/cara-menemukan-player-id-free-fire/",
+            "headline": "Cara menemukan Player ID Free Fire dari profil akunmu",
+            "description": "Temukan Player ID melalui profil Free Fire, bedakan nomor akun dari nama karakter, lalu cocokkan kembali sebelum mengisi formulir.",
+            "inLanguage": "id",
+            "citation": [
+              "https://help.garena.co.id/post/bagaimana-cara-mengecek-player-id-dan-nickname-akun-saya",
+              "https://gendutstore.com/id/free-fire"
+            ],
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://gendut-store-panduan.onrender.com/assets/articles/5e1588cb2ded33db9b2ed51081584e11e07d3a7b295d15a0442984b13b157ecf.png",
+              "width": 1536,
+              "height": 1024,
+              "caption": "Ilustrasi Free Fire bertuliskan Temukan Player ID; tag kertas berlabel Contoh ilustrasi menampilkan nama karakter Pemain Contoh dan Player ID 987654321, dengan logo Gendut Store di kanan atas."
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://gendut-store-panduan.onrender.com/artikel/cara-menemukan-player-id-free-fire/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": "https://gendut-store-panduan.onrender.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Artikel",
+                "item": "https://gendut-store-panduan.onrender.com/artikel/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Cara menemukan Player ID Free Fire dari profil akunmu",
+                "item": "https://gendut-store-panduan.onrender.com/artikel/cara-menemukan-player-id-free-fire/"
+              }
+            ]
+          }
+        ]
+      },
+      "page_type": "article"
     }
   ]
 }
