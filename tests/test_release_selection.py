@@ -1,6 +1,7 @@
 """Synthetic local exports only: never withdraw a real production page."""
 import unittest,tempfile,shutil,json,hashlib,importlib.util,copy
 from pathlib import Path
+from cover_fixture import assign as assign_cover
 ROOT=Path(__file__).resolve().parents[1]
 def module(path,name):
  s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
@@ -14,7 +15,7 @@ class ReleaseSelection(unittest.TestCase):
   self.file,self.exp=self.export(1);self.adapter.import_export(self.file)
  def tearDown(self):self.temp.cleanup()
  def export(self,revision,doc=None):
-  doc=copy.deepcopy(doc or self.doc);raw=json.dumps(doc,ensure_ascii=False,separators=(',',':'));sha=hashlib.sha256(raw.encode()).hexdigest();v={'schema_version':1,'page_id':'selection-fixture','revision':revision,'canonical_public_document_json':raw,'public_content_hash':sha,'content_hash':sha,'document':doc,'source':self.selection.SOURCE,'approval':{'actor':'Reza','revision':revision,'content_hash':sha},'qa':{'agent_id':'synthetic-reviewer','revision':revision,'content_hash':sha}};f=self.root/('export'+str(revision)+'.json');f.write_text(json.dumps(v));return f,v
+  doc=copy.deepcopy(doc or self.doc);assign_cover(self.root,doc);raw=json.dumps(doc,ensure_ascii=False,separators=(',',':'));sha=hashlib.sha256(raw.encode()).hexdigest();v={'schema_version':1,'page_id':'selection-fixture','revision':revision,'canonical_public_document_json':raw,'public_content_hash':sha,'content_hash':sha,'document':doc,'source':self.selection.SOURCE,'approval':{'actor':'Reza','revision':revision,'content_hash':sha},'qa':{'agent_id':'synthetic-reviewer','revision':revision,'content_hash':sha}};f=self.root/('export'+str(revision)+'.json');f.write_text(json.dumps(v));return f,v
  def instruction(self):
   sha=self.exp['content_hash'];v={'schema_version':1,'page_id':'selection-fixture','path':self.doc['path'],'revision':1,'content_hash':sha,'state':'withdraw_requested','source':self.selection.SOURCE,'withdrawal':{'request_id':'9d9b64c5-8213-4892-88dc-cfeff979094c','revision':1,'content_hash':sha,'note':'PRIVATE_REASON_CANARY','staff':'PRIVATE_STAFF_CANARY','target':{'kind':'approved_snapshot','revision':1,'content_hash':sha,'commit':'a'*40,'url':self.selection.SOURCE['origin']+self.doc['path'],'sha256':'b'*64,'checked_at':'2026-10-25T00:00:00Z','provenance':'approved_snapshot_and_current_public_manifest'}}};return v
  def withdraw(self,v=None):
@@ -42,6 +43,12 @@ class ReleaseSelection(unittest.TestCase):
   with self.assertRaises(ValueError):self.build()
  def test_suppressed_derived_href_preserves_readable_prose(self):
   text='<p>Keep this exact prose <a href="/artikel/selection-fixture/?x=1#part">read the same label</a>.</p>';result=self.selection.suppress_links(text,{self.doc['path']},self.selection.SOURCE['origin']);self.assertNotIn('href=',result);self.assertIn('Keep this exact prose',result);self.assertIn('read the same label',result)
+ def test_shared_explicit_scene_survives_one_withdrawal_then_orphan_is_not_served(self):
+  collection=json.loads((self.root/'content/editorial-covers.json').read_text());sha=collection['articles'][self.doc['path']]['cover_sha256'];scene=collection['covers'][sha]['path'];snapshot=self.root/'content/approved/selection-fixture-r1.json';before=snapshot.read_bytes()
+  second={**self.doc,'path':'/artikel/shared-cover/'};file,value=self.export(2,second);value['page_id']='shared-fixture';file.write_text(json.dumps(value));self.adapter.import_export(file)
+  self.withdraw();out=self.build();self.assertTrue((out/scene.lstrip('/')).exists());self.assertEqual(snapshot.read_bytes(),before)
+  decision=self.instruction();decision.update(page_id='shared-fixture',path=second['path'],revision=2,content_hash=value['content_hash']);decision['withdrawal'].update(request_id='34b5d009-dd11-4ccc-9ee5-ea7f186b1ab8',revision=2,content_hash=value['content_hash']);decision['withdrawal']['target'].update(revision=2,content_hash=value['content_hash'],url=self.selection.SOURCE['origin']+second['path']);self.withdraw(decision)
+  out=self.build();self.assertFalse((out/scene.lstrip('/')).exists());self.assertFalse((out/'artikel/shared-cover/index.html').exists());bindings=json.loads((out/'editorial-cover-manifest.json').read_text())['covers'];self.assertNotIn(second['path'],[b['article_path'] for b in bindings]);self.assertEqual(snapshot.read_bytes(),before)
 
  def test_legacy_external_html_uses_current_manifest_and_actual_render_without_approval(self):
   out=self.build();path='/game/free-fire/';body=(out/path.lstrip('/')/'index.html').read_bytes();sha=hashlib.sha256(body).hexdigest();manifest=json.loads((out/'site-manifest.json').read_text());manifest['source_commit']='a'*40;mf=self.root/'observed-manifest.json';mf.write_text(json.dumps(manifest));v=self.instruction();v['path']=path;v['page_id']='legacy-fixture';v['withdrawal']['target'].update(kind='external_html',url=self.selection.SOURCE['origin']+path,sha256=sha,provenance='current_public_manifest_without_invented_approval');f=self.root/'private-legacy.json';f.write_text(json.dumps(v))

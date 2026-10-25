@@ -19,7 +19,7 @@ def render_pages(data):
  rendered={}
  for p in data['pages']:
   if p.get('page_type')=='article':
-   content=articles.render_article(p['approved_document'],data['pages'])
+   content=articles.render_article(p['approved_document'],data['pages'],p.get('editorial_cover'))
   elif p.get('page_type')=='article_index':
    content=articles.render_index([q for q in data['pages'] if q.get('page_type')=='article'],data['pages'])
   elif p.get('approved_document'):

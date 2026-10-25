@@ -12,6 +12,7 @@ import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
+from cover_fixture import assign as assign_cover
 
 REPO=Path(__file__).resolve().parents[1]
 
@@ -32,7 +33,7 @@ class ArticleBuild(unittest.TestCase):
         self.doc={'page_type':'article','path':'/artikel/isolated-help/','title':'Isolated article answering one question','description':'An isolated article fixture for testing the actual approved publication adapter.','target_keywords':['isolated help'],'content':{'lead':'A useful introduction belonging only to an isolated test fixture.','sections':[{'heading':'Check the original record','paragraphs':['Use the official instructions. <script>fixture is plain text</script>'],'bullets':['Keep the reference available.'],'source_ids':['official']}]},'sources':[{'id':'official','label':'Official isolated help reference','url':'https://help.example.org/articles/check?lang=id#record','verified_at':'2026-10-16T02:00:00Z'}],'related_paths':['/game/free-fire/']}
     def tearDown(self):self.temp.cleanup()
     def export(self,doc=None):
-        doc=copy.deepcopy(doc or self.doc);raw=json.dumps(doc,ensure_ascii=False,separators=(',',':'));digest=hashlib.sha256(raw.encode()).hexdigest()
+        doc=copy.deepcopy(doc or self.doc);assign_cover(self.root,doc);raw=json.dumps(doc,ensure_ascii=False,separators=(',',':'));digest=hashlib.sha256(raw.encode()).hexdigest()
         value={'schema_version':1,'page_id':'isolated-article','revision':2,'canonical_public_document_json':raw,'public_content_hash':digest,'content_hash':digest,'document':{**doc,'pic_agent_id':'PRIVATE_CANARY','workflow_task_id':'PRIVATE_TASK'},'source':self.adapter.module.SOURCE,'approval':{'actor':'Reza','revision':2,'content_hash':digest},'qa':{'agent_id':'PRIVATE_QA','revision':2,'content_hash':digest}}
         file=self.root/'private-export.json';file.write_text(json.dumps(value));return file,value
     def build(self):
@@ -131,6 +132,13 @@ class ArticleBuild(unittest.TestCase):
     def test_related_path_must_exist_and_receipt_hash_is_rechecked_by_build(self):
         doc=copy.deepcopy(self.doc);doc['related_paths']=['/game/not-built/'];file,_=self.export(doc);self.adapter.import_export(file)
         with self.assertRaisesRegex(ValueError,'Tautan halaman lokal'):self.build()
+    def test_new_article_requires_explicit_assignment_even_when_game_cover_exists(self):
+        file,_=self.export();collection=self.root/'content/editorial-covers.json';data=json.loads(collection.read_text());data['articles'].pop(self.doc['path']);collection.write_text(json.dumps(data));before=(self.root/'content/site.json').read_bytes()
+        with self.assertRaisesRegex(ValueError,'belum qualified'):self.adapter.import_export(file)
+        self.assertEqual((self.root/'content/site.json').read_bytes(),before);self.assertFalse((self.root/'content/approved').exists())
+    def test_build_rechecks_assignment_after_successful_import(self):
+        file,_=self.export();self.adapter.import_export(file);collection=self.root/'content/editorial-covers.json';data=json.loads(collection.read_text());data['articles'].pop(self.doc['path']);collection.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'belum qualified'):self.build()
     def test_saved_snapshot_is_revalidated_during_build(self):
         file,_=self.export();self.adapter.import_export(file)
         saved=next((self.root/'content/approved').glob('*.json'));value=json.loads(saved.read_text());value['canonical_public_document_json']+=' ';saved.write_text(json.dumps(value))

@@ -70,6 +70,11 @@ def build(address, output):
     selection_spec=importlib.util.spec_from_file_location('release_selection',ROOT/'scripts/release-selection.py');selection=importlib.util.module_from_spec(selection_spec);selection_spec.loader.exec_module(selection)
     withdrawn=selection.load(ROOT);pages=selection.selected(pages,approval_proofs,withdrawn);site['pages']=pages;site['withdrawn_paths']=[r['path'] for r in withdrawn]
     article_pages=[p for p in pages if p.get('page_type')=='article']
+    cover_spec=importlib.util.spec_from_file_location('editorial_covers',ROOT/'scripts/editorial-covers.py');covers=importlib.util.module_from_spec(cover_spec);cover_spec.loader.exec_module(covers)
+    cover_collection=covers.load(ROOT) if article_pages else {};cover_paths=set();cover_records=[]
+    for page in article_pages:
+        cover=covers.select(ROOT,page['approved_document'],cover_collection);page['editorial_cover']=cover;cover_paths.add(cover['path'].lstrip('/'))
+        cover_records.append({'article_path':page['path'],**covers.binding(cover,approval_proofs[page['path']]),'alt':cover['alt'],'width':cover['width'],'height':cover['height'],'mime':cover['mime']})
     banner_paths=set()
     for page in article_pages:
         banner=page['approved_document'].get('banner')
@@ -93,6 +98,7 @@ def build(address, output):
         if not path.is_file() or path.name in ('robots.txt', 'sitemap.xml'): continue
         relative = path.relative_to(source)
         if str(relative).startswith('assets/articles/') and str(relative) not in banner_paths:continue
+        if str(relative).startswith('assets/editorial-covers/') and str(relative) not in cover_paths:continue
         # Owner-provided Google challenges are root files, not rendered pages.
         google_file = path.suffix == '.html' and len(relative.parts) == 1 and re.fullmatch(r'google[A-Za-z0-9_-]{4,128}\.html', path.name)
         if path.suffix == '.html' and not google_file: continue
@@ -150,6 +156,7 @@ def build(address, output):
     assets=[{'path':'/'+str(p.relative_to(output)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted((output/'assets').rglob('*')) if p.is_file()]
     manifest={'schema_version':1,'origin':address,'repository':'phantomx567/gendut-store-seo','branch':'main','source_commit':commit,'generated_at':datetime.now(timezone.utc).isoformat(),'pages':records,'assets':assets,'deployment':{'provider':'Render','commit':commit,'status':'built','url':address}}
     (output/'site-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+    if cover_records:(output/'editorial-cover-manifest.json').write_text(json.dumps({'schema_version':1,'covers':cover_records},ensure_ascii=False,indent=2))
     return {'output':str(output),'origin':address,'pages':len(records),'files':sum(p.is_file() for p in output.rglob('*')),'source_commit':commit,'published':False}
 
 if __name__ == '__main__':

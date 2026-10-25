@@ -71,9 +71,15 @@ def metadata(doc,origin):
         {'@type':'BreadcrumbList','@id':url+'#breadcrumb','itemListElement':[{'@type':'ListItem','position':1,'name':'Beranda','item':origin+'/'},{'@type':'ListItem','position':2,'name':'Artikel','item':origin+'/artikel/'},{'@type':'ListItem','position':3,'name':doc['title'],'item':url}]}
     ]}
 
-def render_article(doc,pages):
+def editorial_figure(cover):
+    if not cover:raise ValueError('Cover editorial Artikel belum tersedia.')
+    e=lambda value:escape(str(value),quote=True)
+    return '<figure class="editorial-scene"><img src="'+e(cover['path'])+'" alt="'+e(cover['alt'])+'" width="'+str(cover['width'])+'" height="'+str(cover['height'])+'" decoding="async" fetchpriority="high"></figure>'
+
+def render_article(doc,pages,cover=None):
     e=lambda value:escape(str(value),quote=True)
     parts=['<main id="konten" class="editorial wrap"><nav class="editorial-breadcrumb" aria-label="Breadcrumb"><a href="/">Beranda</a><span aria-hidden="true">/</span><a href="/artikel/">Artikel</a></nav><article><header class="editorial-heading"><p class="eyebrow">Artikel Gendut Store</p><h1>'+e(doc['title'])+'</h1><p class="editorial-lead">'+e(doc['content']['lead'])+'</p></header><nav class="editorial-toc" aria-label="Isi artikel"><h2>Dalam artikel ini</h2><ol>']
+    parts[0]=parts[0].replace('<header class="editorial-heading">',editorial_figure(cover)+'<header class="editorial-heading">')
     if doc.get('banner'):
         b=doc['banner'];figure='<figure class="editorial-banner"><img src="'+e(b['path'])+'" alt="'+e(b['alt'])+'" width="'+str(b['width'])+'" height="'+str(b['height'])+'" decoding="async" fetchpriority="high"></figure>'
         parts[0]=parts[0].replace('</header><nav', '</header>'+figure+'<nav')
@@ -93,20 +99,8 @@ def render_article(doc,pages):
     return ''.join(parts)+'</article><p><a class="editorial-back" href="/artikel/">Kembali ke semua artikel</a></p></main>'
 
 def game_cover(page,pages):
-    """Derived game artwork only; editorial illustrations remain in the article."""
-    e=lambda value:escape(str(value),quote=True)
-    related=page.get('approved_document',{}).get('related_paths',[])
-    for path in related:
-        game=next((p for p in pages if p.get('path')==path and path.startswith('/game/')),None)
-        if not game:continue
-        image=game.get('image');copy=game.get('copy')
-        if not isinstance(image,dict) or not isinstance(copy,dict):continue
-        name=image.get('cover_name',copy.get('game'))
-        asset=image.get('path','')
-        if not isinstance(name,str) or not name.strip() or not isinstance(asset,str) or not re.fullmatch(r'/assets/[A-Za-z0-9_-]+\.webp',asset):continue
-        if any(type(image.get(k)) is not int or not 1<=image[k]<=8192 for k in ('width','height')):continue
-        return '<div class="editorial-cover" aria-hidden="true"><div class="editorial-cover-copy"><span>Artikel game</span><strong>'+e(name)+'</strong></div><img src="'+e(asset)+'" alt="" width="'+str(image['width'])+'" height="'+str(image['height'])+'" decoding="async"></div>'
-    return ''
+    """Curated scene, supplied only by the validated active-article builder."""
+    return editorial_figure(page.get('editorial_cover'))
 
 def render_index(pages,all_pages=None):
     e=lambda value:escape(str(value),quote=True)

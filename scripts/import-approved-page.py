@@ -13,6 +13,9 @@ spec=importlib.util.spec_from_file_location('approved_pages',ROOT/'scripts/appro
 
 def import_export(file,banner_file=None):
     doc,proof,snapshot=module.approved_export(file);origin=module.ORIGIN;route=doc['path']
+    if doc.get('page_type')=='article':
+        cover_spec=importlib.util.spec_from_file_location('editorial_covers',ROOT/'scripts/editorial-covers.py');covers=importlib.util.module_from_spec(cover_spec);cover_spec.loader.exec_module(covers)
+        covers.select(ROOT,doc)
     selection_spec=importlib.util.spec_from_file_location('release_selection',ROOT/'scripts/release-selection.py');selection=importlib.util.module_from_spec(selection_spec);selection_spec.loader.exec_module(selection)
     next_selection=selection.after_approved_import(ROOT,route,proof)
     banner=doc.get('banner');banner_data=None
