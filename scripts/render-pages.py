@@ -14,6 +14,16 @@ def discovery_hero(p,search):
  h=p['hero'];primary=h['primary_cta'];secondary=h['secondary_cta'];labels={0:'Mobile Legends',1:'Free Fire',3:'VALORANT'}
  shortcuts=''.join('<a href="'+e(p['cards'][i]['path'])+'"><img src="'+e(p['cards'][i]['image']['path'])+'" width="44" height="44" alt="" decoding="async"><span>'+e(label)+'</span></a>' for i,label in labels.items())
  return '<section class="hero wrap landing-hero"><div class="hero-copy"><p class="eyebrow">Gendut Store · Game &amp; voucher</p><h1>'+e(p['h1']).replace('Lanjut mabar.','<span>Lanjut mabar.</span>')+'</h1><p class="lead">'+e(h['lede'])+'</p><div class="hero-discovery">'+search+'<nav class="game-shortcuts" aria-label="Pintasan panduan game">'+shortcuts+'</nav></div><div class="actions"><a class="button" href="'+e(primary['href'])+'">'+e(primary['label'])+' <span aria-hidden="true">↗</span></a><a class="text-link" href="'+e(secondary['href'])+'">'+e(secondary['label'])+' <span aria-hidden="true">↓</span></a></div></div><div class="hero-art"><span class="hero-stage" aria-hidden="true"></span><span class="hero-orbit" aria-hidden="true"></span><img src="/assets/gendut-mascot-controller.webp" width="1000" height="1000" alt="Maskot Gendut Store duduk memegang controller dengan konsol putih di sampingnya" fetchpriority="high"></div></section>'
+def related_guides(game_path,pages,withdrawn=()):
+ matches=[p for p in pages if p.get('page_type')=='article' and p.get('approval_export') and p.get('path') not in withdrawn and game_path in p.get('approved_document',{}).get('related_paths',[])]
+ if not matches:return ''
+ cards=[]
+ for page in sorted(matches,key=lambda p:p['path']):
+  doc=page['approved_document'];cover=page.get('editorial_cover')
+  if not cover:raise ValueError('Panduan terkait memerlukan cover editorial qualified.')
+  if doc['path']!=page['path']:raise ValueError('Path panduan berbeda dari snapshot approved.')
+  cards.append('<li><a class="related-guide" href="'+e(doc['path'])+'"><img src="'+e(cover['path'])+'" alt="'+e(cover['alt'])+'" width="'+str(cover['width'])+'" height="'+str(cover['height'])+'" loading="lazy" decoding="async"><div><h3>'+e(doc['title'])+'</h3><p>'+e(doc['description'])+'</p><span>Baca panduan <span aria-hidden="true">→</span></span></div></a></li>')
+ return '<section class="article-section related-guides" aria-labelledby="related-guides-title"><h2 id="related-guides-title">Panduan terkait</h2><ul>'+''.join(cards)+'</ul></section>'
 def render_pages(data):
  homefaq=data['pages'][0].get('faq',[])
  rendered={}
@@ -31,6 +41,11 @@ def render_pages(data):
   else:
    c=p['copy'];im=p['image'];facts=''.join('<div><dt>'+e(f['label'])+'</dt><dd>'+e(f['value'])+'</dd></div>' for f in c['product_facts']);sections=''.join('<section class="article-section"><h2>'+e(s['heading'])+'</h2>'+''.join('<p>'+e(a)+'</p>' for a in s['paragraphs'])+'</section>' for s in c['sections']);steps='<ol class="steps">'+''.join('<li><span>0'+str(i+1)+'</span><div><h3>'+e(v['title'])+'</h3><p>'+e(v['text'])+'</p></div></li>' for i,v in enumerate(c['steps']))+'</ol>';links=''.join('<a href="'+q['path']+'">'+e(q.get('copy',{}).get('game',q['title']))+' <span aria-hidden="true">↗</span></a>' for q in data['pages'][1:] if q['path']!=p['path'] and q['path'].startswith('/game/'))
    content='<main id="konten" class="game-page"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Beranda</a><span aria-hidden="true">/</span><span aria-current="page">'+e(c['game'])+'</span></nav><section class="game-hero"><div><p class="eyebrow">Panduan pilihan game &amp; voucher</p><h1>'+e(c['h1'])+'</h1><p class="lead">'+e(c['intro'])+'</p><a class="button" href="'+e(c['cta']['url'])+'">'+e(c['cta']['label'])+' <span aria-hidden="true">↗</span></a><p class="hero-note">Pilihan produk dan pembelian dilanjutkan di gendutstore.com.</p></div><div class="product-visual"><img src="'+im['path']+'" width="'+str(im['width'])+'" height="'+str(im['height'])+'" alt="" fetchpriority="high"></div></section><dl class="product-facts">'+facts+'</dl><div class="article-layout"><article>'+sections+'<section class="article-section"><h2>Langkah menuju produk pilihanmu</h2>'+steps+'</section><section class="article-section"><h2>Pertanyaan tentang '+e(c['game'])+'</h2>'+faq(c['faq'])+'</section></article><aside class="product-aside"><p class="eyebrow">Lanjut ke situs utama</p><h2>Sudah cocok<br>dengan akunmu?</h2><p>Baca pilihan terbaru dan petunjuk produk sebelum melanjutkan pemesanan.</p><a class="button" href="'+e(c['cta']['url'])+'">'+e(c['cta']['label'])+' ↗</a><a class="text-link" href="/#pilihan-game">Lihat game lainnya</a></aside></div><section class="related"><p class="eyebrow">Pilihan lainnya</p><h2>Game lain yang kamu mainkan?</h2><nav aria-label="Panduan game lainnya">'+links+'</nav></section></div></main>'
+  if p['path'].startswith('/game/'):
+   guides=related_guides(p['path'],data['pages'],set(data.get('withdrawn_paths',[])))
+   if guides:
+    marker='<section class="article-section"><h2>Langkah menuju produk pilihanmu</h2>'
+    content=content.replace(marker,guides+marker,1) if marker in content else content.replace('</main>',guides+'</main>',1)
   if p['path']=='/' and not p.get('approved_document'):
    hero=p.get('hero',{})
    content=re.sub(r'(<p class="lead">).*?(</p>)',lambda m:m[1]+e(hero.get('lede',''))+m[2],content,count=1,flags=re.S)

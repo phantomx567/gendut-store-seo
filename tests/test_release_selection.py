@@ -23,9 +23,11 @@ class ReleaseSelection(unittest.TestCase):
  def build(self):
   self.n+=1;out=self.root/('out'+str(self.n));self.builder.build(self.selection.SOURCE['origin'],out);return out
  def test_target_pair_privacy_replay_clean_build_and_snapshot_immutable(self):
+  self.assertIn('href="'+self.doc['path']+'"',(self.build()/'game/free-fire/index.html').read_text())
   snapshot=self.root/'content/approved/selection-fixture-r1.json';before=snapshot.read_bytes();self.withdraw();selection=(self.root/'content/release-selection.json').read_bytes();self.withdraw();self.assertEqual((self.root/'content/release-selection.json').read_bytes(),selection)
   self.assertNotIn(b'PRIVATE',selection);self.assertNotIn(b'request_id',selection);self.assertEqual(snapshot.read_bytes(),before);out=self.build();self.assertFalse((out/'artikel/selection-fixture/index.html').exists());self.assertNotIn(self.doc['path'],(out/'sitemap.xml').read_text());self.assertNotIn(self.doc['title'],(out/'artikel/index.html').read_text())
   self.assertTrue((out/'artikel/cara-membaca-user-id-server-id-mobile-legends/index.html').exists());self.assertTrue((out/'artikel/cara-menemukan-player-id-free-fire/index.html').exists())
+  self.assertNotIn('href="'+self.doc['path']+'"',(out/'game/free-fire/index.html').read_text())
  def test_identical_old_approval_cannot_republish_newer_approval_can(self):
   self.withdraw()
   with self.assertRaisesRegex(ValueError,'lebih baru'):self.adapter.import_export(self.file)
