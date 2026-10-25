@@ -102,3 +102,12 @@
 .landing-game .related-guide:hover h3{text-decoration:underline;text-underline-offset:.2em;color:#fff}
 .landing-game .related-guide:focus-visible{outline:3px solid #64e4d4;outline-offset:4px}
 .landing-game .related-guide{grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));align-items:center}
+
+/* Canonical LPs: reflow with text scaling; leave legacy pages unchanged. */
+.canonical-landing .game-hero{grid-template-columns:repeat(auto-fit,minmax(min(100%,21rem),1fr))}
+.canonical-landing .approved-copy a{color:#c9adff;text-decoration-line:underline;text-decoration-thickness:.08em;text-underline-offset:.18em;font-weight:600}
+.canonical-landing .approved-copy a:hover{text-decoration-thickness:.14em}
+@media(max-width:760px){.landing-game .canonical-landing .game-hero h1{font-size:1.65rem;overflow-wrap:normal;word-break:normal}}
+
+/* At narrow widths keep the enlarged Membership glyph bounds within the page. */
+@media(max-width:359px){.landing-game .canonical-landing .game-hero h1{font-size:1.5rem}}
