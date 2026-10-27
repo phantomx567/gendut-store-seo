@@ -355,70 +355,45 @@
     },
     {
       "path": "/game/free-fire/",
-      "title": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
-      "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
-      "h1": "Top up Free Fire ID: cek ID pemain",
+      "title": "Top Up Free Fire Indonesia: Diamonds & Membership | Gendut Store",
+      "description": "Kenali pilihan Diamonds dan Membership Free Fire Indonesia, cek Player ID, lalu lanjutkan pembelian di situs utama Gendut Store.",
+      "h1": "Top Up Free Fire Indonesia: Diamonds & Membership | Gendut Store",
+      "target_keywords": [
+        "top up Free Fire Indonesia",
+        "Diamonds Free Fire",
+        "Membership Free Fire",
+        "Player ID Free Fire"
+      ],
+      "approval_export": "content/approved/landing-4cdb97fc-2bcc-4335-9764-e8ee7c52e562-r2.json",
+      "twitterCard": "summary",
       "openGraph": {
-        "type": "website",
-        "locale": "id_ID",
-        "site_name": "Gendut Store — Pilihan Game & Voucher",
-        "title": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
-        "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
-        "url": "https://gendut-store-panduan.onrender.com/game/free-fire/",
         "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
         "image_width": 1080,
         "image_height": 1080,
         "image_alt": "Logo Gendut Store"
       },
-      "twitterCard": "summary",
       "jsonLd": {
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "WebSite",
-            "@id": "https://gendut-store-panduan.onrender.com/#website",
-            "url": "https://gendut-store-panduan.onrender.com/",
-            "name": "Gendut Store — Pilihan Game & Voucher",
-            "inLanguage": "id"
-          },
-          {
             "@type": "WebPage",
             "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#webpage",
             "url": "https://gendut-store-panduan.onrender.com/game/free-fire/",
-            "name": "Top Up Free Fire ID: Cek ID Pemain | Gendut Store",
-            "description": "Panduan memilih produk Free Fire Indonesia di Gendut Store. Cocokkan ID pemain dan ketentuan produk, lalu lanjutkan pembelian melalui situs utama.",
-            "inLanguage": "id",
-            "isPartOf": {
-              "@id": "https://gendut-store-panduan.onrender.com/#website"
-            },
-            "breadcrumb": {
-              "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#breadcrumb"
-            }
-          },
-          {
-            "@type": "BreadcrumbList",
-            "@id": "https://gendut-store-panduan.onrender.com/game/free-fire/#breadcrumb",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Beranda",
-                "item": "https://gendut-store-panduan.onrender.com/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Free Fire ID 🇮🇩",
-                "item": "https://gendut-store-panduan.onrender.com/game/free-fire/"
-              }
-            ]
+            "name": "Top Up Free Fire Indonesia: Diamonds & Membership | Gendut Store",
+            "description": "Kenali pilihan Diamonds dan Membership Free Fire Indonesia, cek Player ID, lalu lanjutkan pembelian di situs utama Gendut Store.",
+            "inLanguage": "id"
           }
         ]
       },
-      "target_keywords": [
-        "Free Fire ID 🇮🇩",
-        "top up Free Fire ID 🇮🇩"
-      ],
+      "image": {
+        "path": "/assets/free-fire-game.webp",
+        "source_sha256": "e371953a8839700ae5710f9c6fbb83ef3501d7cf0026eabdab3c2da9f1789eec",
+        "sha256": "7b59c13a47a3268e3a0ce011843e126d804f905cd79c59ef03319ada6a91b491",
+        "width": 480,
+        "height": 480,
+        "bytes": 47030,
+        "cover_name": "Free Fire"
+      },
       "copy": {
         "slug": "free-fire",
         "path": "/game/free-fire/",
@@ -487,15 +462,6 @@
           "label": "Lihat pilihan Free Fire ID",
           "url": "https://gendutstore.com/id/free-fire"
         }
-      },
-      "image": {
-        "path": "/assets/free-fire-game.webp",
-        "source_sha256": "e371953a8839700ae5710f9c6fbb83ef3501d7cf0026eabdab3c2da9f1789eec",
-        "sha256": "7b59c13a47a3268e3a0ce011843e126d804f905cd79c59ef03319ada6a91b491",
-        "width": 480,
-        "height": 480,
-        "bytes": 47030,
-        "cover_name": "Free Fire"
       }
     },
     {
