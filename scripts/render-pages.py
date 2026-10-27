@@ -4,13 +4,21 @@ root=Path(__file__).resolve().parents[1]
 article_spec=importlib.util.spec_from_file_location('article_renderer',root/'scripts/article-pages.py');articles=importlib.util.module_from_spec(article_spec);article_spec.loader.exec_module(articles)
 landing_spec=importlib.util.spec_from_file_location('landing_renderer',root/'scripts/landing-pages.py');landings=importlib.util.module_from_spec(landing_spec);landing_spec.loader.exec_module(landings)
 e=lambda v:html.escape(str(v),quote=True)
+GA4_TAG="""<script async src="https://www.googletagmanager.com/gtag/js?id=G-M4D32F17L8"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-M4D32F17L8');
+</script>"""
+
 def header(home=False):
  return '<a class="skip-link" href="#konten">Langsung ke isi</a><header class="site-header wrap"><a class="brand" href="/" aria-label="Gendut Store, beranda"><img src="/assets/gendut-store-logo.webp" width="800" height="267" alt="Gendut Store"></a><nav aria-label="Navigasi utama"><a href="/#pilihan-game">Pilihan game</a><a href="/#cara-beli">Cara beli</a><a href="/#faq">FAQ</a></nav><a class="button small" href="https://gendutstore.com/games">Buka katalog <span aria-hidden="true">↗</span></a></header>'
 def footer():
  return '<footer class="site-footer wrap"><div><a class="brand" href="/"><img src="/assets/gendut-store-logo.webp" width="800" height="267" alt="Gendut Store" loading="lazy"></a><p>Pilihan game dan voucher.<br>Pembelian dilanjutkan di situs utama Gendut Store.</p></div><nav aria-label="Navigasi footer"><a href="https://gendutstore.com/games">Katalog pusat ↗</a><a href="/#cara-beli">Cara beli</a><a href="/#faq">Pertanyaan umum</a><a href="https://gendutstore.com/terms">Syarat &amp; ketentuan ↗</a></nav><p class="footer-note">Pilih sesuai akunmu. Periksa detail produk sebelum melanjutkan pembelian.</p></footer>'
 def faq(items):return '<div class="faq-list">'+''.join('<details><summary>'+e(p['question'])+'<span aria-hidden="true">+</span></summary><p>'+e(p['answer'])+'</p></details>' for p in items)+'</div>'
 def head(p):
- return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+e(p['title'])+'</title><meta name="description" content="'+e(p['description'])+'"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#110b1c"><meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:site_name" content="Gendut Store — Pilihan Game &amp; Voucher"><meta property="og:title" content="'+e(p['title'])+'"><meta property="og:description" content="'+e(p['description'])+'"><meta name="twitter:card" content="summary"><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/assets/theme-dark.css"><script src="/script.js" defer></script></head><body>'
+ return '<!doctype html><html lang="id"><head><meta charset="utf-8">'+GA4_TAG+'<meta name="viewport" content="width=device-width, initial-scale=1"><title>'+e(p['title'])+'</title><meta name="description" content="'+e(p['description'])+'"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#110b1c"><meta property="og:type" content="website"><meta property="og:locale" content="id_ID"><meta property="og:site_name" content="Gendut Store — Pilihan Game &amp; Voucher"><meta property="og:title" content="'+e(p['title'])+'"><meta property="og:description" content="'+e(p['description'])+'"><meta name="twitter:card" content="summary"><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/assets/theme-dark.css"><script src="/script.js" defer></script></head><body>'
 def discovery_hero(p,search):
  h=p['hero'];primary=h['primary_cta'];secondary=h['secondary_cta'];labels={0:'Mobile Legends',1:'Free Fire',3:'VALORANT'}
  shortcuts=''.join('<a href="'+e(p['cards'][i]['path'])+'"><img src="'+e(p['cards'][i]['image']['path'])+'" width="44" height="44" alt="" decoding="async"><span>'+e(label)+'</span></a>' for i,label in labels.items())

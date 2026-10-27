@@ -43,7 +43,10 @@ class StaticBuild(unittest.TestCase):
    self.assertEqual(html.count('<details>'),5 if record['path']=='/' else 3)
    self.assertTrue(all(len(k)<=100 for k in record['target_keywords']));self.assertNotIn('/workspace/',html)
    parser=build_module.Page();parser.feed(html)
-   for asset in parser.assets:self.assertTrue((out/asset.lstrip('/')).is_file())
+   build_module.validate_assets(parser,out)
+   self.assertEqual(parser.ga4_scripts,1)
+   for asset in parser.assets:
+    if asset!=build_module.GA4_URL:self.assertTrue((out/asset.lstrip('/')).is_file())
   self.assertEqual(len(titles),8);self.assertEqual(len(descriptions),8)
   for asset in manifest['assets']:
    self.assertEqual(hashlib.sha256((out/asset['path'].lstrip('/')).read_bytes()).hexdigest(),asset['sha256'])

@@ -14,6 +14,7 @@ import importlib.util
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+GA4_URL = 'https://www.googletagmanager.com/gtag/js?id=G-M4D32F17L8'
 
 def validate_origin(value):
     parsed = urlsplit(value or '')
@@ -27,9 +28,11 @@ def validate_origin(value):
 
 class Page(HTMLParser):
     def __init__(self):
-        super().__init__(); self.assets = []; self.links = []; self.headings = 0; self.in_h1=False; self.heading_text=[]; self.ids=set()
+        super().__init__(); self.assets = []; self.links = []; self.headings = 0; self.in_h1=False; self.heading_text=[]; self.ids=set(); self.in_head=False; self.ga4_scripts=0
     def handle_starttag(self, tag, pairs):
         attrs = dict(pairs)
+        if tag == 'head': self.in_head=True
+        if tag == 'script' and attrs.get('src') == GA4_URL and self.in_head and 'async' in attrs: self.ga4_scripts+=1
         if tag == 'h1': self.headings += 1; self.in_h1=True
         if attrs.get('id'): self.ids.add(attrs['id'])
         if attrs.get('src'): self.assets.append(attrs['src'])
@@ -37,9 +40,22 @@ class Page(HTMLParser):
         if tag == 'a' and attrs.get('href'): self.links.append(attrs['href'])
 
     def handle_endtag(self, tag):
+        if tag=='head': self.in_head=False
         if tag=='h1': self.in_h1=False
     def handle_data(self, value):
         if self.in_h1: self.heading_text.append(value)
+
+def validate_assets(page, source):
+    # Exactly the owner-provided async HEAD tag; an image/body/duplicate or
+    # lookalike URL must not turn this into a general external-asset bypass.
+    if page.ga4_scripts != 1 or page.assets.count(GA4_URL) != 1:
+        raise ValueError('Tag GA4 resmi harus tepat sekali sebagai script async di HEAD.')
+    for asset in page.assets:
+        if asset == GA4_URL: continue
+        parsed=urlsplit(asset)
+        if parsed.scheme or parsed.netloc: raise ValueError('Aset eksternal tidak diizinkan: '+asset)
+        path=source/asset.lstrip('/')
+        if not path.is_file() or not path.resolve().is_relative_to(source.resolve()): raise ValueError('Aset lokal tidak valid: '+asset)
 
 def build(address, output):
     address = validate_origin(address)
@@ -138,9 +154,7 @@ def build(address, output):
         if '.chatgpt.site' in html: raise ValueError('Alamat hosting privat tidak boleh berada di website publik.')
         page=Page(); page.feed(html)
         if page.headings != 1 or ''.join(page.heading_text)!=spec['h1']: raise ValueError('Satu H1 sesuai copy diperlukan: '+local)
-        for asset in page.assets:
-            path=source/asset.lstrip('/')
-            if not path.is_file() or not path.resolve().is_relative_to(source.resolve()): raise ValueError('Aset lokal tidak valid: '+asset)
+        validate_assets(page, source)
         for link in page.links:
             parsed=urlsplit(link)
             if parsed.scheme or parsed.netloc:
