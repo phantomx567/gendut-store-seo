@@ -244,70 +244,45 @@
     },
     {
       "path": "/game/mobile-legends/",
-      "title": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
-      "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
-      "h1": "Top up Mobile Legends ID: cek User ID dan Server ID",
+      "title": "Top Up MLBB Indonesia: Diamonds & Pass | Gendut Store",
+      "description": "Cek pilihan Diamonds, Weekly Diamond Pass, User ID, dan Server ID untuk MLBB Indonesia sebelum melanjutkan pembelian di situs utama Gendut Store.",
+      "h1": "Top Up MLBB Indonesia: Diamonds & Pass | Gendut Store",
+      "target_keywords": [
+        "top up MLBB Indonesia",
+        "Diamonds Mobile Legends",
+        "Weekly Diamond Pass",
+        "User ID dan Server ID"
+      ],
+      "approval_export": "content/approved/landing-8d67bc7c-cbd6-4f30-89e1-88de50e096fb-r2.json",
+      "twitterCard": "summary",
       "openGraph": {
-        "type": "website",
-        "locale": "id_ID",
-        "site_name": "Gendut Store — Pilihan Game & Voucher",
-        "title": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
-        "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
-        "url": "https://gendut-store-panduan.onrender.com/game/mobile-legends/",
         "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
         "image_width": 1080,
         "image_height": 1080,
         "image_alt": "Logo Gendut Store"
       },
-      "twitterCard": "summary",
       "jsonLd": {
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "WebSite",
-            "@id": "https://gendut-store-panduan.onrender.com/#website",
-            "url": "https://gendut-store-panduan.onrender.com/",
-            "name": "Gendut Store — Pilihan Game & Voucher",
-            "inLanguage": "id"
-          },
-          {
             "@type": "WebPage",
             "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#webpage",
             "url": "https://gendut-store-panduan.onrender.com/game/mobile-legends/",
-            "name": "Top Up Mobile Legends ID: Cek Akun | Gendut Store",
-            "description": "Cek User ID dan Server ID untuk pilihan Mobile Legends Indonesia. Baca panduan singkat, lalu buka detail produk dan lanjutkan di situs utama Gendut Store.",
-            "inLanguage": "id",
-            "isPartOf": {
-              "@id": "https://gendut-store-panduan.onrender.com/#website"
-            },
-            "breadcrumb": {
-              "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#breadcrumb"
-            }
-          },
-          {
-            "@type": "BreadcrumbList",
-            "@id": "https://gendut-store-panduan.onrender.com/game/mobile-legends/#breadcrumb",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Beranda",
-                "item": "https://gendut-store-panduan.onrender.com/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Mobile Legends ID 🇮🇩",
-                "item": "https://gendut-store-panduan.onrender.com/game/mobile-legends/"
-              }
-            ]
+            "name": "Top Up MLBB Indonesia: Diamonds & Pass | Gendut Store",
+            "description": "Cek pilihan Diamonds, Weekly Diamond Pass, User ID, dan Server ID untuk MLBB Indonesia sebelum melanjutkan pembelian di situs utama Gendut Store.",
+            "inLanguage": "id"
           }
         ]
       },
-      "target_keywords": [
-        "Mobile Legends ID 🇮🇩",
-        "top up Mobile Legends ID 🇮🇩"
-      ],
+      "image": {
+        "path": "/assets/mlbb-game.webp",
+        "source_sha256": "0694d0b277a2c4b44c21b4a80e1dd791045af69f2b9dac446c3fc8ba2581fe56",
+        "sha256": "bc105fa21ca8bc59a5e8dec2dc9702f83c22ec0140885bd7b6a92beda6bf32d6",
+        "width": 358,
+        "height": 358,
+        "bytes": 24014,
+        "cover_name": "Mobile Legends"
+      },
       "copy": {
         "slug": "mobile-legends",
         "path": "/game/mobile-legends/",
@@ -376,15 +351,6 @@
           "label": "Lihat pilihan Mobile Legends ID",
           "url": "https://gendutstore.com/id/MLBB"
         }
-      },
-      "image": {
-        "path": "/assets/mlbb-game.webp",
-        "source_sha256": "0694d0b277a2c4b44c21b4a80e1dd791045af69f2b9dac446c3fc8ba2581fe56",
-        "sha256": "bc105fa21ca8bc59a5e8dec2dc9702f83c22ec0140885bd7b6a92beda6bf32d6",
-        "width": 358,
-        "height": 358,
-        "bytes": 24014,
-        "cover_name": "Mobile Legends"
       }
     },
     {

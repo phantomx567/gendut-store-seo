@@ -23,6 +23,10 @@ class StaticBuild(unittest.TestCase):
   for name in ['content','scripts','dist']:shutil.copytree(REPO/name,self.root/name)
   # These unit fixtures intentionally model the original eight LPs, independently of approved production articles.
   fixture_site=json.loads((self.root/'content/site.json').read_text());fixture_site['pages']=[p for p in fixture_site['pages'] if p['path']=='/' or p['path'].startswith('/game/')]
+  # Deliberately exercise legacy game rendering, not production-approved LP references.
+  for page in fixture_site['pages']:
+   page.pop('approval_export',None)
+   if page['path'].startswith('/game/'):page['h1']=page['copy']['h1']
   (self.root/'content/site.json').write_text(json.dumps(fixture_site,ensure_ascii=False))
   shutil.rmtree(self.root/'content/approved',ignore_errors=True);shutil.rmtree(self.root/'dist/assets/articles',ignore_errors=True)
   self.original_root=build_module.ROOT;build_module.ROOT=self.root
