@@ -44,7 +44,7 @@ def render_pages(data):
   elif p.get('approved_document') and p['path'] in landings.ROUTES:
    content=landings.render_game_document(p['approved_document'],p,data['pages'],data.get('withdrawn_paths',[]))
   elif p.get('approved_document'):
-   doc=p['approved_document'];paragraphs=''.join('<p>'+e(t).replace('\n','<br>')+'</p>' for t in doc['content'].split('\n\n') if t.strip())
+   doc=p['approved_document'];paragraphs=landings.generic_content_blocks(doc['content'],data['pages'],data.get('withdrawn_paths',[])) if doc['path'].startswith('/game/') else ''.join('<p>'+e(t).replace('\n','<br>')+'</p>' for t in doc['content'].split('\n\n') if t.strip())
    content='<main id="konten" class="wrap section"><p class="eyebrow">Gendut Store · Panduan game</p><h1>'+e(doc['title'])+'</h1><p class="lead">'+e(doc['description'])+'</p><article class="article-section approved-copy">'+paragraphs+'</article><a class="button" href="https://gendutstore.com/games">Buka katalog Gendut Store ↗</a><p class="catalog-note"><a href="/">Kembali ke beranda</a></p></main>'
   elif p['path']=='/':
    cards=''.join('<article class="game-card" data-game="'+e(c['name'])+'" data-category="'+c['category']+'"><a href="'+c['path']+'"><div class="game-art"><img src="'+c['image']['path']+'" width="'+str(c['image']['width'])+'" height="'+str(c['image']['height'])+'" alt="" loading="lazy" decoding="async"></div><div class="game-copy"><span class="category">'+('Voucher' if c['category']=='voucher' else 'Top up game')+'</span><h3>'+e(c['name'])+'</h3><p>'+e(c['description'])+'</p><span class="card-link">'+e(c['label'])+' <span aria-hidden="true">↗</span></span></div></a></article>' for c in p['cards'])
@@ -96,3 +96,4 @@ if __name__=='__main__':
  for local,html in render_pages(data).items():
   target=root/'dist'/local;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(html)
  print('Rendered source pages from public content/site.json.')
+

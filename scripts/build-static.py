@@ -162,6 +162,8 @@ def build(address, output):
                     approvals.articles.source_url(link);continue
                 if spec.get('approved_document') and spec['path'] in {'/game/mobile-legends/','/game/free-fire/'} and link in {v['url'] for a in pages if a.get('page_type')=='article' for v in a.get('approved_document',{}).get('sources',[])}:
                     approvals.articles.source_url(link);continue
+                if spec['path'] in approval_proofs and spec.get('approved_document') and link in renderer.landings.generic_source_links(spec['approved_document'],pages,site['withdrawn_paths']):
+                    approvals.articles.source_url(link);continue
                 if parsed.scheme!='https' or parsed.hostname!='gendutstore.com' or parsed.username or parsed.password or parsed.port or parsed.query or parsed.fragment: raise ValueError('Tautan produk pusat tidak valid: '+link)
                 if parsed.path not in ['/', '/games', '/terms','/transaction'] and not re.fullmatch(r'/id/[A-Za-z0-9_-]+',parsed.path): raise ValueError('Path produk tidak valid: '+link)
             elif parsed.path and parsed.path not in paths: raise ValueError('Tautan halaman lokal tidak valid: '+link)
@@ -185,3 +187,4 @@ if __name__ == '__main__':
     args=parser.parse_args()
     try: print(json.dumps(build(args.origin,args.output)))
     except (ValueError,OSError,KeyError) as error: parser.exit(1,str(error)+'\n')
+
