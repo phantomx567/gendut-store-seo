@@ -1315,6 +1315,38 @@
         ]
       },
       "page_type": "article"
+    },
+    {
+      "path": "/game/voucher-steam-wallet/",
+      "title": "Voucher Steam Wallet: cek jenis produk dan akun | Gendut Store",
+      "description": "Bedakan hadiah digital Steam dan kartu yang ditebus ke akun. Periksa cara penerimaan, mata uang, wilayah, serta ketentuan voucher sebelum memilih.",
+      "h1": "Voucher Steam Wallet: cek jenis produk dan akun | Gendut Store",
+      "target_keywords": [
+        "voucher Steam Wallet",
+        "Steam gift card",
+        "memilih voucher Steam"
+      ],
+      "approval_export": "content/approved/landing-17f626a2-aa62-4662-b3f8-b70038daee16-r3.json",
+      "twitterCard": "summary",
+      "openGraph": {
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/voucher-steam-wallet/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/voucher-steam-wallet/",
+            "name": "Voucher Steam Wallet: cek jenis produk dan akun | Gendut Store",
+            "description": "Bedakan hadiah digital Steam dan kartu yang ditebus ke akun. Periksa cara penerimaan, mata uang, wilayah, serta ketentuan voucher sebelum memilih.",
+            "inLanguage": "id"
+          }
+        ]
+      }
     }
   ]
 }
