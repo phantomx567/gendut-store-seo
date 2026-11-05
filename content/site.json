@@ -1347,6 +1347,39 @@
           }
         ]
       }
+    },
+    {
+      "path": "/game/zenless-zone-zero/",
+      "title": "Top up Zenless Zone Zero | Gendut Store",
+      "description": "Kenali label Monochrome dan Inter-Knot (Membership), lalu periksa ID Tujuan serta rincian produk ZZZ sebelum memesan di Gendut Store.",
+      "h1": "Top up Zenless Zone Zero | Gendut Store",
+      "target_keywords": [
+        "top up Zenless Zone Zero",
+        "Monochrome ZZZ",
+        "Inter-Knot Membership",
+        "ID Tujuan ZZZ"
+      ],
+      "approval_export": "content/approved/landing-775d36f6-89cb-457a-977d-9ce1a40f40d2-r4.json",
+      "twitterCard": "summary",
+      "openGraph": {
+        "image": "https://gendut-store-panduan.onrender.com/assets/gendut-store-social.png",
+        "image_width": 1080,
+        "image_height": 1080,
+        "image_alt": "Logo Gendut Store"
+      },
+      "jsonLd": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://gendut-store-panduan.onrender.com/game/zenless-zone-zero/#webpage",
+            "url": "https://gendut-store-panduan.onrender.com/game/zenless-zone-zero/",
+            "name": "Top up Zenless Zone Zero | Gendut Store",
+            "description": "Kenali label Monochrome dan Inter-Knot (Membership), lalu periksa ID Tujuan serta rincian produk ZZZ sebelum memesan di Gendut Store.",
+            "inLanguage": "id"
+          }
+        ]
+      }
     }
   ]
 }

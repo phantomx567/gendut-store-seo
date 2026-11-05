@@ -4,7 +4,16 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('home_renderer',ROOT/'scripts/render-pages.py');r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
 class HomeSteam(unittest.TestCase):
  def setUp(self):
-  self.site=json.loads((ROOT/'content/site.json').read_text());self.steam=next(p for p in self.site['pages'] if p['path']=='/game/voucher-steam-wallet/');self.steam['approved_document']={k:self.steam[k] for k in ('path','title','description')};self.steam['approved_document']['content']='Synthetic rendering fixture.';self.site['pages']=[p for p in self.site['pages'] if p.get('page_type')!='article']
+  self.site=json.loads((ROOT/'content/site.json').read_text());proofs={}
+  # Match production builder context for every approved page, not only Steam.
+  spec=importlib.util.spec_from_file_location('home_approved_pages',ROOT/'scripts/approved-pages.py');approvals=importlib.util.module_from_spec(spec);spec.loader.exec_module(approvals)
+  for page in self.site['pages']:
+   if page.get('approval_export'):
+    document,proof=approvals.public_snapshot(ROOT/page['approval_export'],page['path']);page['approved_document']=document;proofs[page['path']]=proof
+  spec=importlib.util.spec_from_file_location('home_release_selection',ROOT/'scripts/release-selection.py');selection=importlib.util.module_from_spec(spec);spec.loader.exec_module(selection)
+  withdrawn=selection.load(ROOT);self.site['pages']=selection.selected(self.site['pages'],proofs,withdrawn);self.site['withdrawn_paths']=[v['path'] for v in withdrawn]
+  # These unit tests render HOME/game contexts; Article cover rendering has its own suite.
+  self.site['pages']=[p for p in self.site['pages'] if p.get('page_type')!='article'];self.steam=next(p for p in self.site['pages'] if p['path']=='/game/voucher-steam-wallet/')
  def test_approved_exact_metadata_eighth_and_idempotent(self):
   before=copy.deepcopy(self.site['pages'][0]['cards']);cards=r.home_cards(self.site);self.assertEqual(cards[:7],before);self.assertEqual(len(cards),8);self.assertEqual(cards[-1]['name'],self.steam['title']);self.assertEqual(cards[-1]['description'],self.steam['description']);self.assertNotIn('image',cards[-1]);self.assertEqual(r.home_cards(self.site),cards)
   html=r.render_pages(self.site)['index.html'];self.assertIn('class="game-card game-card--text"',html);self.assertIn('href="'+self.steam['path']+'"',html);node=next(n for n in self.site['pages'][0]['jsonLd']['@graph'] if n['@type']=='ItemList');self.assertEqual(node['numberOfItems'],8);self.assertEqual([v['position'] for v in node['itemListElement']],list(range(1,9)));self.assertEqual([v['url'] for v in node['itemListElement']],[self.site['origin']+c['path'] for c in cards])
