@@ -111,3 +111,9 @@
 
 /* At narrow widths keep the enlarged Membership glyph bounds within the page. */
 @media(max-width:359px){.landing-game .canonical-landing .game-hero h1{font-size:1.5rem}}
+
+/* An approved guide without qualified artwork remains an honest text entry. */
+.landing-home .game-card--text{grid-column:1/-1}.landing-home .game-card--text .game-copy{padding:20px}.landing-home .game-card--text .game-copy p{max-width:75ch}
+
+/* Visible label participates in flow: wrapped/zoomed text pushes the input. */
+.hero-discovery .search-field{flex:1;min-width:0}.hero-discovery .search-label{display:block;margin:0 0 .5rem;color:var(--muted);font-size:.75rem;font-weight:600}
